@@ -1,0 +1,31 @@
+*,
+::before,
+::after {
+    font-family: 'DM Sans', sans-serif;
+    box-sizing: border-box;
+}
+
+html {
+    // 1rem = 10 on most browsers
+    font-size: 62.5%;
+}
+
+body {
+    // body font size 16px on most browsers
+    font-size: 1.6rem;
+}
+
+.list-unstyled {
+    list-style: none;
+    padding-left: 0;
+    ul {
+        padding-left: 2rem;
+    }
+}
+
+.list-inline {
+    padding-left: 0;
+    li {
+        display: inline-block;
+    }
+}
