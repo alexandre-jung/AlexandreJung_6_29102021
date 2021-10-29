@@ -13,51 +13,38 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
 
+    <!-- Component specific CSS -->
+    <link rel="stylesheet" href="components/components.css">
+
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     <title>Components</title>
 </head>
 
 <body>
 
-    <!-- Keyboard navigation links -->
-    <ul class="list-unstyled">
-        <li>
-            <a href="#mainContent" class="sr-only sr-only-focusable">
-                Passer au contenu
-            </a>
-        </li>
-    </ul>
-
-    <!-- Main header -->
-    <header>
-
-        <!-- Site logo -->
-        <div>
-            <a href="/">
-                <img src="/assets/logo.svg" alt="Fisheye">
-            </a>
-        </div>
-
-        <!-- Main navigation menu -->
-        <nav>
-            <ul class="list-inline">
-                <li>
-                    <a href="#">#Portrait</a>
-                </li>
-                <li>
-                    <a href="#">#Sport</a>
-                </li>
-                <li>
-                    <a href="#">#Animaux</a>
-                </li>
-            </ul>
-        </nav>
-
-    </header>
-
-    <!-- Main content -->
-    <main id="mainContent">
-        <h1>Chargement...</h1>
-    </main>
+    <section>
+        <h1>Boutons</h1>
+        <h2>Principal</h2>
+        <p>
+            <button class="btn btn-primary">Me contacter (button)</button>
+            <a href="#" class="btn btn-primary">Me contacter (link)</a>
+        </p>
+        <h2>Tag</h2>
+        <p>
+            <button class="btn btn-tag">#Portrait</button>
+            <a href="#" class="btn btn-tag">#Animaux</a>
+        </p>
+        <h2>Like</h2>
+        <p id="tags">
+            <button class="btn btn-like">
+                <span>12</span>
+                <svg aria-hidden="true" viewbox="0 0 20 19" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M10 18.35L8.55 17.03C3.4 12.36 0 9.28 0 5.5C0 2.42 2.42 0 5.5 0C7.24 0 8.91 0.81 10 2.09C11.09 0.81 12.76 0 14.5 0C17.58 0 20 2.42 20 5.5C20 9.28 16.6 12.36 11.45 17.04L10 18.35Z" />
+                </svg>
+            </button>
+        </p>
+    </section>
 
     <!-- Javascript -->
     <script type="module" src="/js/main.mjs"></script>
