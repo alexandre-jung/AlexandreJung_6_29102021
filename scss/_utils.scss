@@ -1,0 +1,34 @@
+@use 'variables' as *;
+
+$font-sizes: (
+    9: 0.9rem,
+    10: 1rem,
+    13: 1.3rem,
+    36: 3.6rem,
+);
+
+.text-primary {
+    color: $color-primary;
+}
+
+.text-secondary {
+    color: $color-secondary;
+}
+
+.text-midgray {
+    color: $color-midgray;
+}
+
+@each $n, $size in $font-sizes {
+    .fs-#{$n} {
+        font-size: $size;
+    }
+}
+
+.fw-normal {
+    font-weight: 400;
+}
+
+.fw-bold {
+    font-weight: 500;
+}

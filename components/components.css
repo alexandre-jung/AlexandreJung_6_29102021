@@ -3,9 +3,27 @@ body {
 }
 
 section {
-    margin-top: 50px;
+    margin: 50px 0;
 }
 
 h2 {
     color: gray;
+}
+
+.btn + .btn {
+    margin-left: 20px;
+}
+
+.resizable {
+    resize: horizontal;
+    overflow: hidden;
+    padding: 10px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.container > * {
+    margin-right: 50px;
 }

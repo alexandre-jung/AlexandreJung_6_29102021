@@ -10,40 +10,234 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/main.css">
-
     <!-- Component specific CSS -->
     <link rel="stylesheet" href="components/components.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
 
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     <title>Components</title>
 </head>
 
+<!-- TODO remove id tags, add aria-labels -->
+
 <body>
 
     <section>
         <h1>Boutons</h1>
-        <h2>Principal</h2>
-        <p>
-            <button class="btn btn-primary">Me contacter (button)</button>
-            <a href="#" class="btn btn-primary">Me contacter (link)</a>
-        </p>
-        <h2>Tag</h2>
-        <p>
-            <button class="btn btn-tag">#Portrait</button>
-            <a href="#" class="btn btn-tag">#Animaux</a>
-        </p>
-        <h2>Like</h2>
-        <p id="tags">
-            <button class="btn btn-like">
-                <span>12</span>
-                <svg aria-hidden="true" viewbox="0 0 20 19" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M10 18.35L8.55 17.03C3.4 12.36 0 9.28 0 5.5C0 2.42 2.42 0 5.5 0C7.24 0 8.91 0.81 10 2.09C11.09 0.81 12.76 0 14.5 0C17.58 0 20 2.42 20 5.5C20 9.28 16.6 12.36 11.45 17.04L10 18.35Z" />
-                </svg>
-            </button>
-        </p>
+        <div class="container">
+            
+            <div>
+                <h2>Principal</h2>
+                <p>
+                    <button class="btn btn-primary">Me contacter</button>
+                </p>
+            </div>
+
+            <div>
+                <h2>Tag</h2>
+                <p>
+                    <button class="btn btn-tag">#Portrait</button>
+                </p>
+            </div>
+    
+            <div>
+                <h2>Like</h2>
+                <p style="font-size: 2.4rem;">
+                    <button class="btn btn-like">
+                        <span>12</span>
+                        <svg aria-hidden="true" viewbox="0 0 20 19" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M10 18.35L8.55 17.03C3.4 12.36 0 9.28 0 5.5C0 2.42 2.42 0 5.5 0C7.24 0 8.91 0.81 10 2.09C11.09 0.81 12.76 0 14.5 0C17.58 0 20 2.42 20 5.5C20 9.28 16.6 12.36 11.45 17.04L10 18.35Z" />
+                        </svg>
+                    </button>
+                </p>
+            </div>
+
+            <div>
+                <h2>Dropdown</h2>
+                <div
+                    class="dropdown"
+                    data-expanded="false"
+                    data-value="popularity"
+                >
+                    <button
+                        class="dropdown-toggle"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                    >
+                        <div
+                            class="sr-only"
+                            id="label-choice"
+                        >
+                            Trier par
+                        </div>
+                        <span
+                            class="dropdown-value"
+                            id="dropdown-value"
+                        >
+                        </span>
+                    </button>
+                    <div
+                        class="dropdown-list list-unstyled"
+                        role="listbox"
+                        aria-expanded="true"
+                        aria-activedescendant="popularity"
+                        tabindex="-1"
+                    >
+                        <div href="#"
+                            class="dropdown-item"
+                            id="popularity"
+                            data-value="popularity"
+                            data-selected="false"
+                            data-active="false"
+                            role="option"
+                            aria-selected="true"
+                            tabindex="-1"
+                        >
+                            Popularité
+                        </div>
+                        <div
+                            href="#"
+                            class="dropdown-item"
+                            id="date"
+                            data-value="date"
+                            data-selected="false"
+                            data-active="false"
+                            role="option"
+                            aria-selected="false"
+                            tabindex="-1"
+                        >
+                            Date
+                        </div>
+                        <div
+                            href="#"
+                            class="dropdown-item"
+                            id="title"
+                            data-value="title"
+                            data-selected="false"
+                            data-active="false"
+                            role="option"
+                            aria-selected="false"
+                            tabindex="-1"
+                        >
+                            Titre
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section>
+        <h1>Cartes</h1>
+        <div class="container">
+
+            <div>
+                <h2>Photo (normal)</h2>
+                <div class="resizable" style="width: 200px; padding-bottom: 20px">
+                    <div class="card-photo" style="width: 100%">
+                        <a href="#" class="ratio-box">
+                            <img src="media/Event_Sparklers.jpg" alt="">
+                        </a>
+                        <div class="card-photo-description">
+                            <p class="card-photo-title">Photo</p>
+                            <button class="btn btn-like">
+                                <span>12</span>
+                                <svg aria-hidden="true" viewbox="0 0 20 19" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M10 18.35L8.55 17.03C3.4 12.36 0 9.28 0 5.5C0 2.42 2.42 0 5.5 0C7.24 0 8.91 0.81 10 2.09C11.09 0.81 12.76 0 14.5 0C17.58 0 20 2.42 20 5.5C20 9.28 16.6 12.36 11.45 17.04L10 18.35Z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2>Photo (large)</h2>
+                <div class="resizable" style="width: 200px; padding-bottom: 20px">
+                    <div class="card-photo" style="width: 100%">
+                        <a href="#" class="ratio-box wide">
+                            <img src="media/Event_Sparklers.jpg" alt="">
+                        </a>
+                        <div class="card-photo-description">
+                            <p class="card-photo-title">Photo</p>
+                            <button class="btn btn-like">
+                                <span>12</span>
+                                <svg aria-hidden="true" viewbox="0 0 20 19" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M10 18.35L8.55 17.03C3.4 12.36 0 9.28 0 5.5C0 2.42 2.42 0 5.5 0C7.24 0 8.91 0.81 10 2.09C11.09 0.81 12.76 0 14.5 0C17.58 0 20 2.42 20 5.5C20 9.28 16.6 12.36 11.45 17.04L10 18.35Z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h2>Photo (auto)</h2>
+                <div class="resizable" style="width: 200px; padding-bottom: 20px">
+                    <div class="card-photo" style="width: 100%">
+                        <a href="#" class="ratio-box auto">
+                            <img src="media/Event_Sparklers.jpg" alt="">
+                        </a>
+                        <div class="card-photo-description">
+                            <p class="card-photo-title">Photo</p>
+                            <button class="btn btn-like">
+                                <span>12</span>
+                                <svg aria-hidden="true" viewbox="0 0 20 19" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M10 18.35L8.55 17.03C3.4 12.36 0 9.28 0 5.5C0 2.42 2.42 0 5.5 0C7.24 0 8.91 0.81 10 2.09C11.09 0.81 12.76 0 14.5 0C17.58 0 20 2.42 20 5.5C20 9.28 16.6 12.36 11.45 17.04L10 18.35Z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section>
+        <h1>Carte photographe</h1>
+
+        <div class="resizable" style="display: inline-block; padding-bottom: 20px">
+            <div class="card-photographer fw-bold" style="width: 100%">
+                <a href="#">
+                    <div class="ratio-box square">
+                        <img src="media/Event_Sparklers.jpg" class="rounded" alt="">
+                    </div>
+                    <h2 class="text-secondary fs-36 fw-normal">Kold Barkley</h2>
+                </a>
+                <p class="card-photographer-description">
+                    <span class="location text-primary fs-13">London, UK</span><br>
+                    <span class="presentation fs-10">Voir le beau dans les choses du quotidien</span><br>
+                    <span class="price fs-9 fw-normal text-midgray">400€/jour</span>
+                </p>
+                <div class="card-photographer-tags">
+                    <button class="btn btn-tag">#Portrait</button>
+                    <button class="btn btn-tag">#Events</button>
+                    <button class="btn btn-tag">#Travel</button>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section>
+        <h1>Photo de profil</h1>
+
+        <div class="resizable" style="width: 200px">
+            <div class="ratio-box square">
+                <a href="#">
+                    <img src="media/Event_Sparklers.jpg" class="rounded" alt="">
+                </a>
+            </div>
+        </div>
+
     </section>
 
     <!-- Javascript -->

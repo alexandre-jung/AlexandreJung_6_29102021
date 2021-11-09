@@ -1,0 +1,95 @@
+@use '../variables' as *;
+
+.card-photo {
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    a, img {
+        display: block;
+    }
+    img {
+        width: 100%;
+        object-fit: cover;
+        border-radius: 0.5rem;
+        height: 300px;
+    }
+    &-description {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1rem;
+        overflow: visible;
+        .btn-like {
+            margin-right: -0.25em;
+        }
+        font-size: 2.4rem;
+        @media screen and (max-width: 800px) {
+            font-size: 1.4rem;
+        }
+    }
+    &-title {
+        font-size: 2.4rem;
+        font-weight: 500;
+        color: $color-primary;
+        font-size: 1em;
+    }
+}
+
+.ratio-box {
+    position: relative;
+    display: block;
+    padding-top: 300 / 350 * 100%;
+    &.wide {
+        padding-top: 190 / 335 * 100%;
+    }
+    &.square {
+        padding-top: 100%;
+    }
+    img {
+        object-fit: cover;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+    }
+    &.auto {
+        padding-top: 300 / 350 * 100%;
+        @media screen and (max-width: 800px) {
+            padding-top: 190 / 335 * 100%;
+        }
+    }
+}
+
+.rounded {
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.card-photographer {
+    text-align: center;
+    display: inline-block;
+    * {
+        margin: 0;
+        line-height: 1.6rem;
+    }
+    h2 {
+        line-height: 120%;
+        margin-top: 2.5rem;
+    }
+    a {
+        display: block;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        &:focus {
+            outline: 2px solid black;
+        }
+    }
+    &-tags .btn-tag {
+        margin: 0.2rem 0;
+    }
+    &-description {
+        margin: 0.5rem 0; 
+    }
+}

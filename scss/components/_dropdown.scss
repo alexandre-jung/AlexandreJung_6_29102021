@@ -1,0 +1,206 @@
+@use '../variables' as *;
+@use 'sass:color';
+
+/////////////////////////////////////////////////
+// Mixins
+/////////////////////////////////////////////////
+
+$clip-path-hidden: polygon(
+    0 0,
+    100% 0,
+    100% 0,
+    0 0
+);
+
+$clip-path-visible: polygon(
+    -5% -5%,
+    105% -5%,
+    105% 105%,
+    -5% 105%
+);
+
+@mixin clip-path-hide {
+    -webkit-clip-path: $clip-path-hidden;
+    clip-path: $clip-path-hidden;
+}
+
+@mixin clip-path-show {
+    -webkit-clip-path: $clip-path-visible;
+    clip-path: $clip-path-visible;
+}
+
+@mixin right-icon($svg) {
+    -webkit-mask: url($svg);
+    mask: url($svg);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    background-color: white;
+}
+
+.dropdown {
+    &, * {
+        margin: 0;
+        padding: 0;
+    }
+    display: inline-flex;
+    flex-direction: column;
+    height: 6rem !important;
+    max-height: 6rem !important;
+    user-select: none;
+    position: relative;
+    z-index: 1;
+}
+
+/////////////////////////////////////////////////
+// Dropdown
+/////////////////////////////////////////////////
+
+/**
+ * Show / hide the list using visibility & clip-path
+ */
+.dropdown-list {
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    visibility: hidden;
+    @include clip-path-hide;
+    transition: clip-path 150ms ease-in-out;
+
+    [data-expanded=true] & {
+        visibility: visible;
+        @include clip-path-show;
+    }
+    [data-is-closing=true] & {
+        @include clip-path-hide;
+    }
+}
+
+/**
+ * Common style for all list items
+ */
+.dropdown-toggle,
+.dropdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    height: 6rem;
+    line-height: 6rem;
+    padding: 0 2rem;
+    cursor: pointer;
+    text-decoration: none;
+    border: none;
+    white-space: nowrap;
+    font-weight: 700;
+    transition:
+        color 150ms ease-in-out,
+        background-color 150ms ease-in-out;
+    &::after {
+        transition: background-color 150ms ease-in-out;
+    }
+}
+
+/**
+ * Button style
+ */
+.dropdown-toggle {
+    margin: 0;
+    border: none;
+    text-align: left;
+    border-radius: 0.5rem;
+    color: white;
+    background-color: $color-primary;
+    &::after {
+        // Arrow down icon with transition
+        content: '';
+        display: inline-block;
+        width: 1.6rem;
+        height: 1.1rem;
+        margin-left: 1.5rem;
+        @include right-icon('data:image/svg+xml; utf8, <svg viewBox="0 0 16 11" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M14.12 0.453125L8 6.55979L1.88 0.453125L0 2.33312L8 10.3331L16 2.33312L14.12 0.453125Z"/></svg>');
+        transition: transform 250ms ease-in-out;
+        transform: rotate(0deg);
+    }
+    &:hover,
+    &:focus {
+        // Focus & hover styles
+        color: black;
+        background-color: $color-secondary;
+        &::after {
+            background-color: black;
+        }
+    }
+    [data-expanded=true] & {
+        // Round only top borders when expanded
+        border-radius: 0.5rem 0.5rem 0 0;
+        &::after {
+            // Arrow up icon when expanded
+            transform: rotate(-180deg);
+        }
+    }
+    [data-is-closing=true] &::after {
+        transform: rotate(0deg);
+    }
+    &:hover ~ * > :first-child::before {
+        // Hide the first divider when the button is highlighted
+        display: none;
+    }
+}
+
+/**
+ * List items styles
+ */
+.dropdown-item {
+    margin-top: -1px;
+    color: white;
+    background-color: $color-primary;
+    position: relative;
+    &[data-active=true]::after {
+        // Active check mark
+        content: '';
+        display: inline-block;
+        width: 1.6rem;
+        height: 1.6rem;
+        margin-left: 2.5rem;
+        @include right-icon('data:image/svg+xml; utf8, <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M510.52,118.16,449.81,57.48a5,5,0,0,0-7.13,0L181.15,318.9a5,5,0,0,1-7.13,0L69.32,214.24a5,5,0,0,0-7.13,0L1.48,274.93a5,5,0,0,0,0,7.12L174,454.52a5,5,0,0,0,7.13,0L510.52,125.29A5,5,0,0,0,510.52,118.16Z"/></svg>');
+    }
+    &:hover,
+    &[data-selected=true] {
+        // Focus & hover styles
+        color: black;
+        background-color: $color-secondary;
+        &::after {
+            background-color: black;
+        }
+    }
+    &:hover {
+        background-color: color.adjust($color-secondary, $lightness: +20%);
+    }
+    &:last-child {
+        // Round bottom borders of the last item
+        border-bottom-left-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+        border-radius: 0 0 0.5rem 0.5rem;
+    }
+    &[data-active=false] {
+        // Replace check mark with padding
+        padding-right: 6.1rem;
+    }
+    &::before {
+        // List dividers
+        content: '';
+        width: 80%;
+        height: 1px;
+        margin: 0 auto;
+        background-color: white;
+        position: absolute;
+        top: -1px;
+    }
+    &:hover::before,
+    &:hover + &::before,
+    &[data-selected=true]::before,
+    &[data-selected=true] + &::before {
+        // Hide list dividers around focused item
+        display: none;
+    }
+}
