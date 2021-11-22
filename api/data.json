@@ -45,7 +45,7 @@
       "id": 925,
       "city": "Barcelona",
       "country": "Spain",
-      "tags": ["sport", "fashion", "events", "animals"],
+      "tags": ["sports", "fashion", "events", "animals"],
       "tagline": "Je crée des souvenirs",
       "price": 275,
       "portrait": "RhodeDubois.jpg"
@@ -168,7 +168,7 @@
       "photographerId": 925,
       "title": "8 Rows",
       "image": "Sport_2000_with_8.jpg",
-      "tags": ["sport"],
+      "tags": ["sports"],
       "likes": 52,
       "date": "2013-02-30",
       "price": 70
@@ -552,7 +552,7 @@
       "photographerId": 930,
       "title": "Tricks in the Air",
       "video": "Sport_Tricks_in_the_air.mp4",
-      "tags": ["sport"],
+      "tags": ["sports"],
       "likes": 150,
       "date": "2018-02-30",
       "price": 70
@@ -562,7 +562,7 @@
       "photographerId": 930,
       "title": "Climber",
       "image": "Sport_Next_Hold.jpg",
-      "tags": ["sport"],
+      "tags": ["sports"],
       "likes": 101,
       "date": "2018-03-05",
       "price": 65
@@ -572,7 +572,7 @@
       "photographerId": 930,
       "title": "Surfer",
       "image": "sport_water_tunnel.jpg",
-      "tags": ["sport"],
+      "tags": ["sports"],
       "likes": 103,
       "date": "2018-03-10",
       "price": 70
@@ -582,7 +582,7 @@
       "photographerId": 930,
       "title": "Skier",
       "image": "Sport_Sky_Cross.jpg",
-      "tags": ["sport"],
+      "tags": ["sports"],
       "likes": 77,
       "date": "2018-04-16",
       "price": 50
@@ -592,7 +592,7 @@
       "photographerId": 930,
       "title": "Race End",
       "image": "Sport_Race_End.jpg",
-      "tags": ["sport"],
+      "tags": ["sports"],
       "likes": 88,
       "date": "2018-04-22",
       "price": 65
@@ -602,7 +602,7 @@
       "photographerId": 930,
       "title": "Jump!",
       "image": "Sport_Jump.jpg",
-      "tags": ["sport"],
+      "tags": ["sports"],
       "likes": 95,
       "date": "2018-04-27",
       "price": 70
