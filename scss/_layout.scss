@@ -1,0 +1,14 @@
+#photographers {
+    display: flex;
+    flex-wrap: wrap;
+    .card-photographer {
+        flex: 0 0 calc(100% - 60px);
+        margin: 30px;
+        @media screen and (min-width: 800px) {
+            flex: 0 0 calc(50% - 60px);
+        }
+        @media screen and (min-width: 1250px) {
+            flex: 0 0 calc(33% - 60px);
+        }
+    }
+}

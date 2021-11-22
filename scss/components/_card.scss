@@ -78,16 +78,22 @@
         line-height: 120%;
         margin-top: 2.5rem;
     }
-    a {
+    .image-link {
         display: block;
         text-decoration: none;
         border-radius: 0.5rem;
+        white-space: nowrap;
+        text-align: center;
         &:focus {
             outline: 2px solid black;
         }
     }
+    .img-wrapper {
+        width: 75%;
+        margin: 0 auto;
+    }
     &-tags .btn-tag {
-        margin: 0.2rem 0;
+        margin: 0.2rem 0.2rem;
     }
     &-description {
         margin: 0.5rem 0; 

@@ -1,4 +1,4 @@
-import { DataFetcher } from "../api.mjs";
+import DataFetcher from "../api.mjs";
 
 export default class View {
 
@@ -8,30 +8,23 @@ export default class View {
             throw new Error('You must provide a template name');
         }
 
-        const templateURL = `/api/${view}.template.html`;
+        this.viewName = view;
+        this.templateURL = `/api/${view}.template.html`;
         this.viewRoot = document.querySelector('#root');
-        this.dataFetcher = new DataFetcher(templateURL);
+        this.templateDataFetcher = new DataFetcher(this.templateURL);
         this.templateElement = null;
     }
 
-    renderView(params) {
+    renderView(params, contentDataFetcher) {
 
-        const replaceViewRoot = () => {
+        this.templateDataFetcher.get().then(templateData => {
+            this.templateElement = document.createElement('div');
+            this.templateElement.innerHTML = templateData;
             this.viewRoot.textContent = '';
             this.viewRoot.appendChild(this.templateElement);
-        }
-        
-        if (!this.templateElement) {
-            this.dataFetcher.get().then(fetchedData => {
-                this.templateElement = document.createElement('div');
-                this.templateElement.innerHTML = fetchedData;
-                replaceViewRoot();
-                this.render(params);
-
+            contentDataFetcher.get().then(contentData => {
+                this.render(params ?? {}, contentData);
             });
-        } else {
-            replaceViewRoot();
-            this.render(params);
-        }
+        });
     }
 }

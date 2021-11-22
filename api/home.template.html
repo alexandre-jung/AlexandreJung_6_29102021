@@ -1,1 +1,22 @@
-<h1>Page d'accueil</h1>
+<div id="photographers"></div>
+
+<template id="photographer-template">
+    <div class="card-photographer fw-bold">
+        <a class="image-link" rel="tag">
+            <div class="img-wrapper">
+                <div class="ratio-box square">
+                    <img class="rounded photographer-portrait" alt="" data-navlink>
+                </div>
+            </div>
+            <h2 class="text-secondary fs-36 fw-normal photographer-name" data-navlink></h2>
+        </a>
+        <p class="card-photographer-description">
+            <span class="location text-primary fs-13 photographer-city"></span><br>
+            <span class="presentation fs-10 photographer-tagline"></span><br>
+            <span class="fs-9 fw-normal text-midgray"><span class="photographer-price"></span>€/jour</span>
+        </p>
+        <div class="card-photographer-tags photographer-tags">
+            <a class="btn btn-tag" tabindex="-1"></a>
+        </div>
+    </div>
+</template>

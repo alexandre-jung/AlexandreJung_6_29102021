@@ -40,49 +40,35 @@
 
 <body>
 
-    <a href="/home" rel="tag">accueil</a><br><br>
-    <a href="/photographer/1" rel="tag">photographe 1</a><br><br>
-    <a href="/photographer/2" rel="tag">photographe 2</a><br><br>
-    <a href="/photographer/" rel="tag">(invalid)</a><br><br>
-
-    <p>
-        <!-- <a href="#" class="filter" id="filter-portrait">portrait</a>
-        <a href="#" class="filter" id="filter-animaux">animaux</a> -->
-    </p>
-
     <!-- Keyboard navigation links -->
     <ul class="list-unstyled">
         <li>
-            <a href="#mainContent" class="sr-only sr-only-focusable">
+            <a href="#root" class="sr-only sr-only-focusable">
                 Passer au contenu
             </a>
         </li>
     </ul>
 
     <!-- Main header -->
-    <header>
+    <header id="site-header">
 
         <!-- Site logo -->
-        <div>
-            <a href="/">
-                <img src="/assets/logo.svg" alt="Fisheye">
+        <div id="site-logo">
+            <a href="/" rel="tag">
+                <img src="/assets/logo.svg" alt="Fisheye" data-navlink>
             </a>
         </div>
 
         <!-- Main navigation menu -->
         <nav>
-            <ul class="list-inline">
+            <ul class="list-inline m-0" id="tags">
                 <li>
-                    <a href="#">#Portrait</a>
-                </li>
-                <li>
-                    <a href="#">#Sport</a>
-                </li>
-                <li>
-                    <a href="#">#Animaux</a>
+                    <a class="btn btn-tag"></a>
                 </li>
             </ul>
         </nav>
+
+        <h1 class="text-primary m-0" id="page-title">Nos photographes</h1>
 
     </header>
 

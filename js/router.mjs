@@ -11,14 +11,15 @@ class Path {
         return !!match;
     }
 
-    call() {
-        this.viewObject.renderView(this.params);
+    call(contentDataFetcher) {
+        this.viewObject.renderView(this.params, contentDataFetcher);
     }
 }
 
 class Router {
-    constructor() {
+    constructor(contentDataFetcher) {
         this.routes = [];
+        this.contentDataFetcher = contentDataFetcher;
     }
     add(route) {
         this.routes.push(route);
@@ -29,7 +30,7 @@ class Router {
         });
         const targetRoute = this.routes[targetRouteIdx];
         if (targetRouteIdx >= 0) {
-            targetRoute.call();
+            targetRoute.call(this.contentDataFetcher);
         } else {
             throw new Error(`${path} doesn't match any path`);
         }
