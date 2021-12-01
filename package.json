@@ -1,20 +1,28 @@
 {
-    "name": "fisheye",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "scripts": {
-        "dev:sass": "sass --watch ./scss/main.scss ./css/main.css",
-        "dev:server": "live-server --host=localhost --port=80 --entry-file=./index.html",
-        "components:server": "live-server --host=localhost --port=8000 --mount=/:./components/ --ignore=node_modules,api,assets,scss,media,.gitignore,*.json .",
-        "start": "concurrently -n dev: \"npm:dev:*\" --kill-others",
-        "components": "concurrently -n sass,server \"npm:dev:sass\" \"npm:components:server\" --kill-others"
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "live-server": "^1.2.1",
-        "sass": "^1.43.4"
-    }
+  "name": "fisheye",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:sass": "sass --watch ./scss/main.scss ./css/main.css",
+    "dev:server": "live-server --host=localhost --port=80 --entry-file=./index.html",
+    "components:server": "live-server --host=localhost --port=8000 --mount=/:./components/ --ignore=node_modules,api,assets,scss,media,.gitignore,*.json .",
+    "start": "concurrently -n dev: \"npm:dev:*\" --kill-others",
+    "components": "concurrently -n sass,server \"npm:dev:sass\" \"npm:components:server\" --kill-others"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexandre-jung/AlexandreJung_6_29102021.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexandre-jung/AlexandreJung_6_29102021/issues"
+  },
+  "homepage": "https://github.com/alexandre-jung/AlexandreJung_6_29102021#readme",
+  "dependencies": {
+    "concurrently": "^6.4.0",
+    "live-server": "^1.1.0",
+    "sass": "^1.44.0"
+  }
 }
