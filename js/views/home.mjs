@@ -34,17 +34,18 @@ export default class Home extends View {
             p.querySelector('.image-link').href = '/photographer/' + photographer.id;
 
             const tags = p.querySelector('.photographer-tags');
-            const tagElement = tags.firstElementChild;
-            tagElement.remove();
+            if (tags) {
+                const tagElement = tags.firstElementChild;
+                tagElement.remove();
+                photographer.tags.forEach(tag => {
+                    const newTag = tagElement.cloneNode(true);
+                    newTag.href = '/home?filter_by=' + tag;
+                    newTag.rel = 'tag';
+                    newTag.textContent = '#' + tag;
+                    tags.append(newTag);
 
-            photographer.tags.forEach(tag => {
-                const newTag = tagElement.cloneNode(true);
-                newTag.href = '/home?filter_by=' + tag;
-                newTag.rel = 'tag';
-                newTag.textContent = '#' + tag;
-                tags.append(newTag);
-
-            })
+                });
+            }
             photographers.append(p);
         });
 
@@ -56,16 +57,18 @@ export default class Home extends View {
         });
         
         const tags = document.querySelector('#tags');
-        const tagElement = tags.firstElementChild;
-        tags.textContent = '';
-        tagElement.remove();
-        tagSet.forEach(tag => {
-            const newTag = tagElement.cloneNode(true);
-            const link = newTag.firstElementChild;
-            link.href = '/home?filter_by=' + tag;
-            link.rel = 'tag';
-            link.textContent = '#' + tag;
-            tags.append(newTag);
-        });
+        if (tags) {
+            const tagElement = tags.firstElementChild;
+            tags.textContent = '';
+            tagElement.remove();
+            tagSet.forEach(tag => {
+                const newTag = tagElement.cloneNode(true);
+                const link = newTag.firstElementChild;
+                link.href = '/home?filter_by=' + tag;
+                link.rel = 'tag';
+                link.textContent = '#' + tag;
+                tags.append(newTag);
+            });
+        }
     }
 }

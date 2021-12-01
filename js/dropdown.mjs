@@ -209,12 +209,6 @@ class DropdownList extends Focusable {
         );
     }
     /**
-     * Make the active item focused
-     */
-    focusActive() {
-        this.setCurrentOption(dropdownList.currentActiveIndex);
-    }
-    /**
      * Select and focus the previous option
      */
     selectPrevious() {
@@ -492,7 +486,6 @@ if (dropdown.element) {
         if (dropdown.toggle()) {
             dropdownList.focus();
             dropdownToggle.blur();
-            dropdownList.focusActive();
             // close the dropdown when clicking anywhere on the document
             // 1. prevent the click event to reach the document root
             // 2. close on click & remove this handler
@@ -534,9 +527,11 @@ if (dropdown.element) {
         switch (ev.key) {
             case 'ArrowUp':
                 dropdownList.previous();
+                ev.preventDefault();
                 break;
             case 'ArrowDown':
                 dropdownList.next();
+                ev.preventDefault();
                 break;
             case 'Enter':
                 dropdownList.selectCurrent();
