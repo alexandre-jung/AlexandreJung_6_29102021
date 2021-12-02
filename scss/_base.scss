@@ -14,6 +14,7 @@ body {
     // body font size 16px on most browsers
     font-size: 1.6rem;
     margin: 25px 25px 100px;
+    overflow-x: hidden;
 }
 
 .list-unstyled {
@@ -35,9 +36,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 40px 150px 80px 100px;
     flex-wrap: wrap;
-    @media screen and (min-width: 1200px) {
+    margin-bottom: 6rem;
+    @media screen and (min-width: 1100px) {
         flex-wrap: nowrap;
     }
 }
@@ -48,7 +49,7 @@ nav {
     justify-content: center;
     flex: 0 0 100%;
     margin-top: 40px;
-    @media screen and (min-width: 1200px) {
+    @media screen and (min-width: 1100px) {
     flex: 1 0 0;
         order: 0;
         margin: 0 20px;
@@ -62,7 +63,7 @@ nav {
     > * {
         margin: 0.2rem;
     }
-    @media screen and (min-width: 1200px) {
+    @media screen and (min-width: 1100px) {
         margin: 0 20px;
     }
 }
@@ -78,4 +79,8 @@ nav {
 
 .m-0 {
     margin: 0;
+}
+
+.tag-list * {
+    margin: 0.2rem 0.2rem !important;
 }

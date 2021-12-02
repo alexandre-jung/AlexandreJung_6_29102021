@@ -1,15 +1,25 @@
 import View from "./View.mjs";
+import { getAllTags } from "../api.mjs";
+import { tagFactory } from "../factories/ui.mjs";
 
 export default class Home extends View {
 
     constructor() {
         super('home');
+        this.firstRender = true;
     }
 
-    render = ({}, contentData) => {
+    render = ({ }, contentData) => {
+        // Hide home header elements except the logo
+        const tagNav = document.querySelector('nav');
+        const homeTitle = document.querySelector('#page-title');
+        tagNav.style.display = 'block';
+        homeTitle.style.display = 'block';
+
+        const pageTitle = document.querySelector('title');
+        pageTitle.textContent = 'Accueil';
 
         const filterBy = new URLSearchParams(location.search).get('filter_by');
-        const tagSet = new Set();
 
         let filteredData = contentData.photographers;
         if (filterBy) {
@@ -33,41 +43,24 @@ export default class Home extends View {
             p.querySelector('.photographer-price').textContent = photographer.price;
             p.querySelector('.image-link').href = '/photographer/' + photographer.id;
 
-            const tags = p.querySelector('.photographer-tags');
+            const tags = p.querySelector('.tag-list');
             if (tags) {
-                const tagElement = tags.firstElementChild;
-                tagElement.remove();
-                photographer.tags.forEach(tag => {
-                    const newTag = tagElement.cloneNode(true);
-                    newTag.href = '/home?filter_by=' + tag;
-                    newTag.rel = 'tag';
-                    newTag.textContent = '#' + tag;
-                    tags.append(newTag);
-
+                const createTag = tagFactory();
+                photographer.tags.forEach(tagLabel => {
+                    tags.append(createTag(tagLabel));
                 });
             }
+
             photographers.append(p);
         });
 
-        // Find all tags associated to photographers.
-        contentData.photographers.forEach(photographer => {
-            photographer.tags.forEach(tag => {
-                tagSet.add(tag);
-            });
-        });
-        
         const tags = document.querySelector('#tags');
-        if (tags) {
-            const tagElement = tags.firstElementChild;
+        if (tags && this.firstRender) {
             tags.textContent = '';
-            tagElement.remove();
-            tagSet.forEach(tag => {
-                const newTag = tagElement.cloneNode(true);
-                const link = newTag.firstElementChild;
-                link.href = '/home?filter_by=' + tag;
-                link.rel = 'tag';
-                link.textContent = '#' + tag;
-                tags.append(newTag);
+            this.firstRender = false;
+            const createTag = tagFactory(true);
+            getAllTags(contentData).forEach(tagLabel => {
+                tags.append(createTag(tagLabel));
             });
         }
     }

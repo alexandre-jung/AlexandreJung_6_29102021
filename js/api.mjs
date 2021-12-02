@@ -29,3 +29,13 @@ export default class DataFetcher {
         return new Promise(resolve => resolve(this.data));
     }
 }
+
+export function getAllTags(data) {
+    const tagSet = new Set();
+    data.photographers.forEach(photographer => {
+        photographer.tags.forEach(tag => {
+            tagSet.add(tag);
+        });
+    });
+    return tagSet;
+}

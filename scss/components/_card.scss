@@ -46,7 +46,7 @@
     &.square {
         padding-top: 100%;
     }
-    img {
+    img, video {
         object-fit: cover;
         position: absolute;
         width: 100%;
@@ -83,18 +83,14 @@
         display: block;
         text-decoration: none;
         border-radius: 0.5rem;
-        white-space: nowrap;
+        // white-space: nowrap;
         text-align: center;
         &:focus {
             outline: 2px solid black;
         }
     }
     .img-wrapper {
-        width: 75%;
         margin: 0 auto;
-    }
-    &-tags .btn-tag {
-        margin: 0.2rem 0.2rem;
     }
     &-description {
         margin: 0.5rem 0; 

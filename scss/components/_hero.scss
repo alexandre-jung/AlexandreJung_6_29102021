@@ -1,0 +1,29 @@
+@use '../variables' as *;
+
+.hero {
+    background-color: $color-lightgray;
+    border-radius: 0.5rem;
+    display: flex;
+    padding: 4.8rem 3.4rem;
+    margin-bottom: 6rem;
+    overflow: hidden;
+
+    > *,
+    #photographer-name-title {
+        margin: 0;
+    }
+
+    header {
+        flex: 0 0 auto;
+    }
+
+    button {
+        margin: 0 4rem;
+        flex: 0 0 auto;
+    }
+
+    .profile-photo {
+        margin-left: auto;
+        flex: 0 0 20rem;
+    }
+}

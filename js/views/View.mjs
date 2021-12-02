@@ -23,6 +23,7 @@ export default class View {
             this.viewRoot.textContent = '';
             this.viewRoot.appendChild(this.templateElement);
             contentDataFetcher.get().then(contentData => {
+                window.scroll(0, 0);
                 this.render(params ?? {}, contentData);
             });
         });
