@@ -20,6 +20,92 @@
     </div>
 </div>
 
+<div id="orderby">
+    <strong class="orderby-label">Trier par</strong>
+    <div
+        class="dropdown"
+        data-expanded="false"
+        data-value="popularity"
+    >
+        <button
+            class="dropdown-toggle"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+        >
+            <div
+                class="sr-only"
+                id="label-choice"
+            >
+                Trier par
+            </div>
+            <span
+                class="dropdown-value"
+                id="dropdown-value"
+            >
+            </span>
+        </button>
+        <div
+            class="dropdown-list list-unstyled"
+            role="listbox"
+            aria-expanded="true"
+            aria-activedescendant="popularity"
+            tabindex="-1"
+        >
+            <div href="#"
+                class="dropdown-item"
+                id="popularity"
+                data-value="popularity"
+                data-selected="false"
+                data-active="false"
+                role="option"
+                aria-selected="true"
+                tabindex="-1"
+            >
+                Popularité
+            </div>
+            <div
+                href="#"
+                class="dropdown-item"
+                id="date"
+                data-value="dateReverse"
+                data-selected="false"
+                data-active="false"
+                role="option"
+                aria-selected="false"
+                tabindex="-1"
+            >
+                Les plus récentes
+            </div>
+            <div
+                href="#"
+                class="dropdown-item"
+                id="date"
+                data-value="date"
+                data-selected="false"
+                data-active="false"
+                role="option"
+                aria-selected="false"
+                tabindex="-1"
+            >
+                Les plus anciennes
+            </div>
+            <div
+                href="#"
+                class="dropdown-item"
+                id="title"
+                data-value="title"
+                data-selected="false"
+                data-active="false"
+                role="option"
+                aria-selected="false"
+                tabindex="-1"
+            >
+                Titre
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="media-container grid"></div>
 
 <template t-name="media-card">

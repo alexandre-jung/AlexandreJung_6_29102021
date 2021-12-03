@@ -459,105 +459,107 @@ class ListIndexCounterClamp {
  * Setup events & dropdown logic
  *******************************************************************/
 
-// Find the dropdown element
-const dropdown = new DropdownContainer(
-    document.querySelector('.dropdown'),
-);
-// Find the toggle button in the dropdown
-if (dropdown.element) {
-    const dropdownToggle = new DropdownToggleBtn(
-        dropdown.element.querySelector('.dropdown-toggle'),
-        dropdown.element.querySelector('.dropdown-value'),
+export function setupDropdown(onValueChange) {
+    // Find the dropdown element
+    const dropdown = new DropdownContainer(
+        document.querySelector('.dropdown'),
     );
-    // Find the list in the dropdown
-    const dropdownList = new DropdownList(
-        dropdown.element.querySelector('.dropdown-list'),
-        dropdown.element.querySelectorAll('.dropdown-item'),
-    );
+    // Find the toggle button in the dropdown
+    if (dropdown.element) {
+        const dropdownToggle = new DropdownToggleBtn(
+            dropdown.element.querySelector('.dropdown-toggle'),
+            dropdown.element.querySelector('.dropdown-value'),
+        );
+        // Find the list in the dropdown
+        const dropdownList = new DropdownList(
+            dropdown.element.querySelector('.dropdown-list'),
+            dropdown.element.querySelectorAll('.dropdown-item'),
+        );
 
-    // Set the button label and value to match the current item
-    if (dropdownList.currentOption) {
-        dropdownToggle.label = dropdownList.currentOption.label;
-        dropdownToggle.value = dropdownList.currentOption.value;
-    }
+        // Set the button label and value to match the current item
+        if (dropdownList.currentOption) {
+            dropdownToggle.label = dropdownList.currentOption.label;
+            dropdownToggle.value = dropdownList.currentOption.value;
+        }
 
-    // Toggle the dropdown when click the toggle button
-    dropdownToggle.element.addEventListener('click', function (ev) {
-        if (dropdown.toggle()) {
+        // Toggle the dropdown when click the toggle button
+        dropdownToggle.element.addEventListener('click', function (ev) {
+            if (dropdown.toggle()) {
+                dropdownList.focus();
+                dropdownToggle.blur();
+                // close the dropdown when clicking anywhere on the document
+                // 1. prevent the click event to reach the document root
+                // 2. close on click & remove this handler
+                ev.stopPropagation();
+                document.addEventListener('click', function closeDropdown() {
+                    document.removeEventListener('click', closeDropdown);
+                    if (dropdown.expanded) {
+                        dropdown.toggle();
+                        dropdownToggle.focus();
+                    }
+                });
+            }
+        });
+
+        // Up / down selection of the options while the dropdown is collapsed
+        dropdownToggle.element.addEventListener('keydown', function (ev) {
+            switch (ev.key) {
+                case 'ArrowUp':
+                    dropdownList.selectPrevious();
+                    break;
+                case 'ArrowDown':
+                    dropdownList.selectNext();
+                    break;
+            }
+        });
+
+        // If clicking the list (i.e. any item in the list)
+        // set this item active and focused, then focus back the list
+        dropdownList.element.addEventListener('click', function (ev) {
+            dropdownList.setActiveOption(ev.target.dataset.value);
             dropdownList.focus();
-            dropdownToggle.blur();
-            // close the dropdown when clicking anywhere on the document
-            // 1. prevent the click event to reach the document root
-            // 2. close on click & remove this handler
-            ev.stopPropagation();
-            document.addEventListener('click', function closeDropdown() {
-                document.removeEventListener('click', closeDropdown);
-                if (dropdown.expanded) {
-                    dropdown.toggle();
+        });
+
+        // Keyboard interaction with the list
+        // 1. Focus items with up / down arrow keys
+        // 2. Select the focused item when hitting enter
+        // 3. Close the dropdown and focus button when hitting escape / tab
+        dropdownList.element.addEventListener('keydown', function (ev) {
+            switch (ev.key) {
+                case 'ArrowUp':
+                    dropdownList.previous();
+                    ev.preventDefault();
+                    break;
+                case 'ArrowDown':
+                    dropdownList.next();
+                    ev.preventDefault();
+                    break;
+                case 'Enter':
+                    dropdownList.selectCurrent();
+                    dropdownList.blur();
                     dropdownToggle.focus();
-                }
-            });
-        }
-    });
+                    dropdown.toggle();
+                    // prevent default, otherwise the button does not keep focus
+                    ev.preventDefault();
+                    break;
+                case 'Escape':
+                case 'Tab':
+                    dropdownList.blur();
+                    dropdownToggle.focus();
+                    dropdown.expanded = false;
+                    break;
+            }
+        });
 
-    // Up / down selection of the options while the dropdown is collapsed
-    dropdownToggle.element.addEventListener('keydown', function (ev) {
-        switch (ev.key) {
-            case 'ArrowUp':
-                dropdownList.selectPrevious();
-                break;
-            case 'ArrowDown':
-                dropdownList.selectNext();
-                break;
-        }
-    });
+        // When selected item changes, update the button label
+        dropdownList.onValueChange = function (id, label) {
+            dropdownToggle.label = label;
+            dropdown.value = id;
+        };
 
-    // If clicking the list (i.e. any item in the list)
-    // set this item active and focused, then focus back the list
-    dropdownList.element.addEventListener('click', function (ev) {
-        dropdownList.setActiveOption(ev.target.dataset.value);
-        dropdownList.focus();
-    });
-
-    // Keyboard interaction with the list
-    // 1. Focus items with up / down arrow keys
-    // 2. Select the focused item when hitting enter
-    // 3. Close the dropdown and focus button when hitting escape / tab
-    dropdownList.element.addEventListener('keydown', function (ev) {
-        switch (ev.key) {
-            case 'ArrowUp':
-                dropdownList.previous();
-                ev.preventDefault();
-                break;
-            case 'ArrowDown':
-                dropdownList.next();
-                ev.preventDefault();
-                break;
-            case 'Enter':
-                dropdownList.selectCurrent();
-                dropdownList.blur();
-                dropdownToggle.focus();
-                dropdown.toggle();
-                // prevent default, otherwise the button does not keep focus
-                ev.preventDefault();
-                break;
-            case 'Escape':
-            case 'Tab':
-                dropdownList.blur();
-                dropdownToggle.focus();
-                dropdown.expanded = false;
-                break;
-        }
-    });
-
-    // When selected item changes, update the button label
-    dropdownList.onValueChange = function (id, label) {
-        dropdownToggle.label = label;
-        dropdown.value = id;
-    };
-
-    // Do something when the dropdown value changes
-    dropdown.onValueChange = function (value) {
-        // ...
+        // Do something when the dropdown value changes
+        dropdown.onValueChange = onValueChange;
     }
 }
+
+setupDropdown();

@@ -2,6 +2,7 @@ import View from "./View.mjs";
 import { tagFactory } from "../factories/ui.mjs";
 import { mediaFactory } from "../factories/ui.mjs";
 import { getTemplateElement } from "../utils.mjs";
+import { setupDropdown } from "../dropdown.mjs";
 
 export default class Photographer extends View {
 
@@ -55,24 +56,68 @@ export default class Photographer extends View {
             return function (src, title, likes) {
                 const mediaCard = mediaTemplate.cloneNode(true);
                 const mediaPlaceholder = mediaCard.querySelector('.media-placeholder');
-                const mediaElement = createMedia(src);
+                const mediaFragment = createMedia(src);
                 mediaCard.querySelector('.total-likes').textContent = likes;
                 mediaCard.querySelector('.photo-title').textContent = title;
-                mediaPlaceholder.append(mediaElement);
+                mediaPlaceholder.append(mediaFragment);
                 return mediaCard;
             }
         }
 
-        const createMediaCard = mediaCardFactory();
-        contentData.media.forEach(function (media) {
-            if (media.photographerId == photographer.id) {
-                const mediaElement = createMediaCard(
-                    media.image ?? media.video,
-                    media.title,
-                    media.likes,
-                );
-                mediaContainer.append(mediaElement);
-            }
+        const currentPhotographerMedia = contentData.media.filter(function (media) {
+            return media.photographerId == photographer.id;
         });
+
+        const createMediaCard = mediaCardFactory();
+        currentPhotographerMedia.forEach(function (media) {
+            const mediaFragment = createMediaCard(
+                media.image ?? media.video,
+                media.title,
+                media.likes,
+            );
+            const mediaElement = mediaFragment.querySelector('.card-photo');
+            // Set data on the card for ordering
+            mediaElement.dataset.popularity = media.likes;
+            mediaElement.dataset.date = new Date(media.date);
+            mediaElement.dataset.dateReverse = new Date(media.date);
+            mediaElement.dataset.title = media.title;
+            mediaElement.title = `${media.title}\n${media.date}`
+            mediaContainer.append(mediaFragment);
+        });
+
+        function orderMedia(orderBy = 'popularity') {
+            const photographerMedia = Array.from(mediaContainer.children);
+            const orderedPhotographerMedia = photographerMedia.sort(function (mediaA, mediaB) {
+                let criterionA = null;
+                let criterionB = null;
+                switch (orderBy) {
+                    case 'popularity':
+                        // Caution: reverse criteria
+                        criterionB = Number(mediaA.dataset[orderBy]);
+                        criterionA = Number(mediaB.dataset[orderBy]);
+                        break;
+                    case 'title':
+                        criterionA = mediaA.dataset[orderBy].toLowerCase();
+                        criterionB = mediaB.dataset[orderBy].toLowerCase();
+                        break;
+                    case 'date':
+                        criterionA = new Date(mediaA.dataset[orderBy]);
+                        criterionB = new Date(mediaB.dataset[orderBy]);
+                        break;
+                    case 'dateReverse':
+                        // Caution: reverse criteria
+                        criterionB = new Date(mediaA.dataset[orderBy]);
+                        criterionA = new Date(mediaB.dataset[orderBy]);
+                        break;
+                }
+                return criterionA < criterionB;
+            });
+            orderedPhotographerMedia.forEach(function (media) {
+                console.log(media, media.dataset[orderBy]);
+                mediaContainer.insertBefore(media, mediaContainer.children[0]);
+            });
+        }
+
+        setupDropdown(orderMedia);
     }
 }
