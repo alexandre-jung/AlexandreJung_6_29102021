@@ -3,11 +3,13 @@ import { tagFactory } from "../factories/ui.mjs";
 import { mediaFactory } from "../factories/ui.mjs";
 import { getTemplateElement } from "../utils.mjs";
 import { setupDropdown } from "../dropdown.mjs";
+import Lightbox from "../lightbox.mjs";
 
 export default class Photographer extends View {
 
     constructor() {
         super('photographer');
+        this.lightbox = new Lightbox();
     }
 
     render = ({ id }, contentData) => {
@@ -76,16 +78,17 @@ export default class Photographer extends View {
                 media.likes,
             );
             const mediaElement = mediaFragment.querySelector('.card-photo');
-            // Set data on the card for ordering
+            // Set data on the card for ordering and lightbox
             mediaElement.dataset.popularity = media.likes;
             mediaElement.dataset.date = new Date(media.date);
             mediaElement.dataset.dateReverse = new Date(media.date);
             mediaElement.dataset.title = media.title;
-            mediaElement.title = `${media.title}\n${media.date}`
+            mediaElement.title = `${media.title}\n${media.date}`;
             mediaContainer.append(mediaFragment);
         });
 
-        function orderMedia(orderBy = 'popularity') {
+
+        const orderMedia = (orderBy = 'popularity') => {
             const photographerMedia = Array.from(mediaContainer.children);
             const orderedPhotographerMedia = photographerMedia.sort(function (mediaA, mediaB) {
                 let criterionA = null;
@@ -112,12 +115,27 @@ export default class Photographer extends View {
                 }
                 return criterionA < criterionB;
             });
+            const mediaSources = [];
             orderedPhotographerMedia.forEach(function (media) {
-                console.log(media, media.dataset[orderBy]);
                 mediaContainer.insertBefore(media, mediaContainer.children[0]);
+                const mediaSrc = media.querySelector('img, video').getAttribute('src');
+                mediaSources.unshift(mediaSrc);
             });
+            this.lightbox.setAllMediaSources(mediaSources);
+            return mediaSources;
         }
 
+        const mediaSources = orderMedia();
         setupDropdown(orderMedia);
+
+        this.lightbox.setAllMediaSources(mediaSources);
+        document.querySelectorAll(
+            '.media-container img, .media-container video'
+        ).forEach(media => {
+            media.addEventListener('click', ev => {
+                this.lightbox.update(ev.target.dataset.ref);
+                this.lightbox.show();
+            });
+        });
     }
 }

@@ -17,6 +17,7 @@ export function imageFactory() {
     return function (src) {
         const image = imageTemplate.cloneNode(false);
         image.src = src;
+        image.dataset.ref = src;
         return image;
     }
 }
@@ -24,22 +25,34 @@ export function imageFactory() {
 export function videoFactory() {
     const videoTemplate = document.createElement('video');
     videoTemplate.style.width = '100%';
-    videoTemplate.setAttribute('controls', '');
+    // videoTemplate.setAttribute('controls', '');
     return function (src) {
         const video = videoTemplate.cloneNode(false);
         video.src = src;
+        video.dataset.ref = src;
+        // const videoOverlay = document.createElement('div');
+        // videoOverlay.classList.add('video-overlay');
+        // videoOverlay.append(video);
+        // return videoOverlay;
         return video;
     }
 }
 
-export function mediaFactory() {
+export function mediaFactory(base = '/media/') {
     const createImage = imageFactory();
     const createVideo = videoFactory();
-    return function (src) {
-        if (src.endsWith('.jpg')) {
-            return createImage(`/media/${src}`);
-        } else if (src.endsWith('.mp4')) {
-            return createVideo(`/media/${src}`);
+    return function (source) {
+        if (source) {
+            if (source.endsWith('.jpg')) {
+                return createImage(`${base}${source}`);
+            } else if (source.endsWith('.mp4')) {
+                return createVideo(`${base}${source}`);
+            } else {
+                console.error('unknown media format');
+                return;
+            }
+        } else {
+            console.error('param source is undefined');
         }
     }
 }

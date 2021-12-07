@@ -6,3 +6,12 @@ export function getTemplateElement(name) {
         }
     }
 }
+
+export function rotateIndex(idx, max) {
+    if (idx < 0) {
+        return max;
+    } else if (idx > max) {
+        return 0;
+    }
+    return idx;
+}
