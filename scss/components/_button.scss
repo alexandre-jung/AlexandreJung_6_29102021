@@ -46,7 +46,8 @@
         font-size: 1.2rem;
 
         &:hover,
-        &:focus {
+        &:focus,
+        &.active {
             color: white;
             background-color: $color-primary;
             border-color: $color-primary;

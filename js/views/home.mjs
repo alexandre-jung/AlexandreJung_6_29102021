@@ -6,7 +6,6 @@ export default class Home extends View {
 
     constructor() {
         super('home');
-        this.firstRender = true;
     }
 
     render = ({ }, contentData) => {
@@ -19,7 +18,7 @@ export default class Home extends View {
         const pageTitle = document.querySelector('title');
         pageTitle.textContent = 'Accueil';
 
-        const filterBy = new URLSearchParams(location.search).get('filter_by');
+        const filterBy = (new URLSearchParams(location.search)).get('filter_by');
 
         let filteredData = contentData.photographers;
         if (filterBy) {
@@ -55,12 +54,12 @@ export default class Home extends View {
         });
 
         const tags = document.querySelector('#tags');
-        if (tags && this.firstRender) {
+        if (tags) {
             tags.textContent = '';
-            this.firstRender = false;
             const createTag = tagFactory(true);
             getAllTags(contentData).forEach(tagLabel => {
-                tags.append(createTag(tagLabel));
+                console.log(tagLabel, filterBy);
+                tags.append(createTag(tagLabel, tagLabel == filterBy));
             });
         }
     }

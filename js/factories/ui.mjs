@@ -3,10 +3,13 @@ export function tagFactory(tabFocusable = false) {
     tagTemplate.classList.add('btn', 'btn-tag');
     tagTemplate.tabIndex = +tabFocusable - 1;
     tagTemplate.rel = 'tag';
-    return function (tagLabel) {
+    return function (tagLabel, active = false) {
         const tag = tagTemplate.cloneNode();
         tag.href = '/home?filter_by=' + tagLabel;
         tag.textContent = `#${tagLabel}`;
+        if (active) {
+            tag.classList.add('active');
+        }
         return tag;
     }
 }
