@@ -4,6 +4,7 @@
     background-color: $color-lightgray;
     border-radius: 0.5rem;
     display: flex;
+    flex-wrap: wrap;
     padding: 4.8rem 3.4rem;
     margin-bottom: 3rem;
     overflow: hidden;
@@ -25,5 +26,29 @@
     .profile-photo {
         margin-left: auto;
         flex: 0 0 20rem;
+    }
+
+    @media screen and (max-width: 1250px) {
+        header {
+            order: 2;
+            flex: 0 0 100%;
+        }
+        .contact {
+            order: 1;
+            margin-left: 0;
+        }
+        .profile-photo {
+            order: 0;
+            margin: 0 8rem 2rem 0;
+        }
+        #photographer-name-title {
+            font-size: 4rem;
+        }
+    }
+
+    @media screen and (max-width: 700px) {
+        .contact {
+            margin-bottom: 2rem;
+        }
     }
 }
