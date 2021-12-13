@@ -28,15 +28,10 @@ export function imageFactory() {
 export function videoFactory() {
     const videoTemplate = document.createElement('video');
     videoTemplate.style.width = '100%';
-    // videoTemplate.setAttribute('controls', '');
     return function (src) {
         const video = videoTemplate.cloneNode(false);
         video.src = src;
         video.dataset.ref = src;
-        // const videoOverlay = document.createElement('div');
-        // videoOverlay.classList.add('video-overlay');
-        // videoOverlay.append(video);
-        // return videoOverlay;
         return video;
     }
 }

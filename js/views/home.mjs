@@ -58,7 +58,6 @@ export default class Home extends View {
             tags.textContent = '';
             const createTag = tagFactory(true);
             getAllTags(contentData).forEach(tagLabel => {
-                console.log(tagLabel, filterBy);
                 tags.append(createTag(tagLabel, tagLabel == filterBy));
             });
         }
