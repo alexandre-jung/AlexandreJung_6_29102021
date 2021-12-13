@@ -55,16 +55,43 @@ export default class Photographer extends View {
         function mediaCardFactory() {
             const createMedia = mediaFactory();
             const mediaTemplate = getTemplateElement('media-card');
-            return function (src, title, likes) {
+            return function (src, title, likes, mediaId) {
                 const mediaCard = mediaTemplate.cloneNode(true);
                 const mediaPlaceholder = mediaCard.querySelector('.media-placeholder');
                 const mediaFragment = createMedia(src);
-                mediaCard.querySelector('.total-likes').textContent = likes;
+                const likesElement = mediaCard.querySelector('.total-likes')
+                likesElement.textContent = likes;
+                likesElement.dataset.value = likes;
+                likesElement.dataset.mediaId = mediaId;
                 mediaCard.querySelector('.photo-title').textContent = title;
                 mediaPlaceholder.append(mediaFragment);
                 return mediaCard;
             }
         }
+
+        document.addEventListener('click', function (ev) {
+            let likeButton = ev.target.closest('.btn.btn-like')
+            if (likeButton) {
+                const likeValueElement = likeButton.querySelector('.total-likes');
+                if (likeValueElement && likeValueElement.dataset.enabled != 'false') {
+                    const currentMediaIdx = contentData.media.findIndex(function(media) {
+                        return media.id == likeValueElement.dataset.mediaId;
+                    });
+                    if (currentMediaIdx != -1) {
+                        const currentMedia = contentData.media[currentMediaIdx];
+                        const currentMediaCanBeLiked = !currentMedia.alreadyLiked;
+                        if (currentMediaCanBeLiked) {
+                            let totalLikes = +likeValueElement.dataset.value;
+                            likeValueElement.dataset.value = ++totalLikes;
+                            likeValueElement.textContent = totalLikes;
+                            likeValueElement.dataset.enabled = false;
+                            currentMedia.likes ++;
+                            currentMedia.alreadyLiked = true;
+                        }
+                    }
+                }
+            }
+        });
 
         const currentPhotographerMedia = contentData.media.filter(function (media) {
             return media.photographerId == photographer.id;
@@ -76,6 +103,7 @@ export default class Photographer extends View {
                 media.image ?? media.video,
                 media.title,
                 media.likes,
+                media.id,
             );
             const mediaElement = mediaFragment.querySelector('.card-photo');
             // Set data on the card for ordering and lightbox
