@@ -79,5 +79,11 @@
         &:hover {
             color: $color-secondary;
         }
+        &:active {
+            outline: none;
+        }
+        &[disabled] {
+            color: gray;
+        }
     }
 }
