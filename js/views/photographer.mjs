@@ -4,6 +4,7 @@ import { mediaFactory } from "../factories/ui.mjs";
 import { getTemplateElement } from "../utils.mjs";
 import { setupDropdown } from "../dropdown.mjs";
 import Lightbox from "../lightbox.mjs";
+import { showModal } from '../modal.mjs';
 
 export default class Photographer extends View {
 
@@ -165,5 +166,11 @@ export default class Photographer extends View {
                 this.lightbox.show();
             });
         });
+
+        // Setup contact modal
+        const contactBtn = document.querySelector('.contact');
+        const modalPhotographerName = document.querySelector('#photographer-name');
+        contactBtn.addEventListener('click', showModal);
+        modalPhotographerName.textContent = photographer.name;
     }
 }

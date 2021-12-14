@@ -49,7 +49,7 @@
         </li>
     </ul>
 
-    <div class="container" >
+    <div class="container">
 
         <!-- Main header -->
         <header id="site-header">
@@ -101,6 +101,37 @@
                 </svg>
             </button>
         </div>
+    </div>
+
+    <div class="contact-modal" role="dialog">
+        <form action="#" method="post">
+            <header class="fs-64">
+                <h2 class="rfs-1 fw-normal">
+                    Contactez-moi<br>
+                    <span id="photographer-name">Mimi Keel</span>
+                </h2>
+                <span class="btn modal-close" class="rfs-1">X</span>
+            </header>
+            <div class="input-group">
+                <label for="first-name" class="fs-36">Prénom</label>
+                <input type="text" name="first-name" id="first-name">
+            </div>
+            <div class="input-group">
+                <label for="last-name" class="fs-36">Nom</label>
+                <input type="text" name="last-name" id="last-name">
+            </div>
+            <div class="input-group">
+                <label for="email" class="fs-36">Email</label>
+                <input type="email" name="email" id="email">
+            </div>
+            <div class="input-group">
+                <label for="message" class="fs-36">Votre message</label>
+                <textarea name="message" id="message"></textarea>
+            </div>
+            <div class="input-group">
+                <input type="submit" value="Envoyer" class="btn btn-primary px-2">
+            </div>
+        </form>
     </div>
 
     <!-- Javascript -->

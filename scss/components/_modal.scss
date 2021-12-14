@@ -42,3 +42,67 @@
         background-color: rgb(247, 247, 247);
     }
 }
+
+.contact-modal {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    background-color: rgba(196, 196, 196, 0.4);
+    max-height: 100vh;
+    overflow: scroll;
+    display: none;
+    &.visible {
+        display: block;
+    }
+    form {
+        background-color: #DB8876;
+        width: 700px;
+        max-width: 100%;
+        margin: 80px auto 0;
+        padding: 0 30px 30px;
+        border-radius: 6px;
+        transform: scale(0.8);
+        transform-origin: top;
+        header {
+            display: flex;
+            padding-top: 30px;
+            margin-bottom: 20px;
+            h2 {
+                flex: 1 1 auto;
+                margin: 0;
+            }
+            .btn {
+                flex: 0 0 auto;
+                color: white;
+                background-color: transparent;
+            }
+        }
+        .input-group {
+            margin: 10px 0;
+        }
+        label {
+            display: inline-block;
+            width: 100%;
+            color: rgb(56, 56, 56);
+            margin-bottom: 5px;
+        }
+        input,
+        textarea {
+            width: 100%;
+            resize: none;
+        }
+        textarea {
+            height: 20rem;
+            overflow: visible;
+        }
+        input[type="submit"] {
+            width: auto;
+            height: 60px;
+            line-height: 60px;
+            margin-top: 20px;
+        }
+    }
+}
