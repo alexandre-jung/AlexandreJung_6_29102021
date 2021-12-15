@@ -8,7 +8,8 @@
     "dev:server": "live-server --host=localhost --port=80 --entry-file=./index.html",
     "components:server": "live-server --host=localhost --port=8000 --mount=/:./components/ --ignore=node_modules,api,assets,scss,media,.gitignore,*.json .",
     "start": "concurrently -n dev: \"npm:dev:*\" --kill-others",
-    "components": "concurrently -n sass,server \"npm:dev:sass\" \"npm:components:server\" --kill-others"
+    "components": "concurrently -n sass,server \"npm:dev:sass\" \"npm:components:server\" --kill-others",
+    "lint": "eslint \"js/**\""
   },
   "repository": {
     "type": "git",
@@ -24,5 +25,8 @@
     "concurrently": "^6.4.0",
     "live-server": "^1.1.0",
     "sass": "^1.44.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.4.1"
   }
 }
