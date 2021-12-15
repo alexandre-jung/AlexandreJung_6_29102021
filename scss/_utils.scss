@@ -4,6 +4,8 @@ $font-sizes: (
     9: 0.9rem,
     10: 1rem,
     13: 1.3rem,
+    18: 1.8rem,
+    24: 2.4rem,
     36: 3.6rem,
     64: 6.4rem,
 );
@@ -32,4 +34,25 @@ $font-sizes: (
 
 .fw-bold {
     font-weight: 500;
+}
+
+.m-0 {
+    margin: 0;
+}
+
+.mt-1 {
+    margin-top: 1rem;
+}
+
+.mt-2 {
+    margin-top: 2rem;
+}
+
+.px-2 {
+    padding-left: 4rem !important;
+    padding-right: 4rem !important;
+}
+
+.rfs-1 {
+    font-size: 1em;
 }
