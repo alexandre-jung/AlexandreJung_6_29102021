@@ -36,7 +36,7 @@ class DropdownContainer {
      * @param value Boolean | String
      */
     set expanded(value) {
-        return this._element.dataset.expanded = String(value) == 'true';
+        this._element.dataset.expanded = String(value) == 'true';
     }
     /**
      * Get the dropdown value
@@ -56,7 +56,7 @@ class DropdownContainer {
         if (this.onValueChange) {
             this.onValueChange(value);
         }
-        return this.element.dataset.value = value;
+        this.element.dataset.value = value;
     }
     /**
      * Toggles the expanded state
@@ -108,7 +108,7 @@ class Focusable {
      * @param value Boolean
      */
     set tabFocusable(value) {
-        return this._element.tabIndex = value ? 0 : -1;
+        this._element.tabIndex = value ? 0 : -1;
     }
     /**
      * Set focus to this element
@@ -152,7 +152,7 @@ class DropdownToggleBtn extends Focusable {
      * @param label String
      */
     set label(label) {
-        return this.valuePlaceholder.textContent = label;
+        this.valuePlaceholder.textContent = label;
     }
 }
 
@@ -163,7 +163,7 @@ class DropdownList extends Focusable {
      * @param element DOM element
      * @param listItems NodeList | Element[]
      */
-    constructor(element, listItems, active = 0) {
+    constructor(element, listItems) {
         super(element);
         this._items = Array.from(listItems);
         this._length = this._items?.length ?? 0;
@@ -340,7 +340,7 @@ class DropdownOption {
      * @param label String
      */
     set label(label) {
-        return this.element.textContent = label;
+        this.element.textContent = label;
     }
     /**
      * Get data-value attribute
@@ -356,7 +356,7 @@ class DropdownOption {
      * @param value String
      */
     set value(value) {
-        return this.element.dataset.value = value;
+        this.element.dataset.value = value;
     }
     /**
      * Get selected state
@@ -374,7 +374,7 @@ class DropdownOption {
         if (this.onSelect) {
             this.onSelect(this.element.id);
         }
-        return this.element.dataset.selected = value;
+        this.element.dataset.selected = value;
     }
     /**
      * Get active state
@@ -390,7 +390,7 @@ class DropdownOption {
      */
     set active(value) {
         this.element.setAttribute('aria-selected', value);
-        return this.element.dataset.active = value;
+        this.element.dataset.active = value;
     }
 }
 

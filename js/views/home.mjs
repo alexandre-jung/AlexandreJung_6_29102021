@@ -8,7 +8,7 @@ export default class Home extends View {
         super('home');
     }
 
-    render = ({ }, contentData) => {
+    render = (_, contentData) => {
         // Hide home header elements except the logo
         const tagNav = document.querySelector('nav');
         const homeTitle = document.querySelector('#page-title');
