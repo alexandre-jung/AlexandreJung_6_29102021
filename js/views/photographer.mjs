@@ -93,6 +93,9 @@ export default class Photographer extends View {
                             likeButton.blur();
                             currentMedia.likes++;
                             currentMedia.alreadyLiked = true;
+
+                            // Update data-popularity of the media element for further ordering
+                            likeButton.closest('[data-popularity]').dataset.popularity++;
                         }
                     }
                 }
