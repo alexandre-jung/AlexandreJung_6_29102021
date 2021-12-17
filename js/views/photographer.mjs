@@ -136,12 +136,14 @@ export default class Photographer extends View {
                         // Caution: reverse criteria
                         [criterionB, criterionA] = [Number(criterionA), Number(criterionB)];
                         break;
-                    case 'dateReverse':
-                        // Caution: reverse criteria
-                        [criterionB, criterionA] = [criterionA, criterionB];
                     case 'date':
                         [criterionA, criterionB] = [new Date(criterionA), new Date(criterionB)];
                         break;
+                    case 'dateReverse':
+                        // Caution: reverse criteria
+                        [criterionB, criterionA] = [new Date(criterionA), new Date(criterionB)];
+                        break;
+                    default:
                 }
                 return criterionA < criterionB;
             });
