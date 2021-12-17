@@ -13,20 +13,13 @@ export function showModal() {
     }
 
     function onSubmit(ev) {
-        console.log(`%cPrénom:%c ${form['first-name'].value}`, 'color: gray; font-style: italic', 'color: black; font-weight: bold');
-        console.log(`%cNom:%c ${form['last-name'].value}`, 'color: gray; font-style: italic', 'color: black; font-weight: bold');
-        console.log(`%cEmail:%c ${form['email'].value}`, 'color: gray; font-style: italic', 'color: black; font-weight: bold');
-        console.log(`%cMessage:%c\n${form['message'].value}`, 'color: gray; font-style: italic', 'color: black; font-weight: bold');
-        form['first-name'].value = '';
-        form['last-name'].value = '';
-        form['email'].value = '';
-        form['message'].value = '';
+        handleSubmit(form);
         hideModal(ev);
     }
 
     modal.classList.add('visible');
     document.body.style.overflow = 'hidden';
-    
+
     modalCloseBtn.addEventListener('click', hideModal);
     form.addEventListener('submit', onSubmit);
     document.addEventListener('keydown', function (ev) {
@@ -34,4 +27,28 @@ export function showModal() {
             hideModal(ev);
         }
     });
+}
+
+function handleSubmit(form) {
+    const fields = Array.from(form.elements);
+    fields.filter(isFormField).forEach(function (field) {
+        outputField(field);
+        clearFormField(field);
+    });
+}
+
+function isFormField(field) {
+    return field.dataset.output != 'false';
+}
+
+function clearFormField(field) {
+    field.value = '';
+}
+
+function outputField(field) {
+    console.log(
+        `%c${field.dataset.label}:%c ${field.value}`,
+        'color: gray; font-style: italic',
+        'color: black; font-weight: bold'
+    );
 }
