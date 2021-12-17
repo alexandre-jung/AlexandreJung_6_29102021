@@ -9,6 +9,7 @@ export function showModal() {
         modalCloseBtn.removeEventListener('click', hideModal);
         form.removeEventListener('submit', onSubmit);
         document.removeEventListener('keydown', hideModal);
+        window.removeEventListener('popstate', hideModal);
     }
 
     function onSubmit(ev) {
@@ -30,6 +31,8 @@ export function showModal() {
             hideModal(ev);
         }
     });
+
+    window.addEventListener('popstate', hideModal);
 }
 
 function handleSubmit(form) {
