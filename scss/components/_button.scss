@@ -83,7 +83,11 @@
             outline: none;
         }
         &[disabled] {
-            color: gray;
+            color: adjust-color(
+                $color: #D3573C,
+                $saturation: 0%,
+                $lightness: 15%
+            );
         }
     }
 }
