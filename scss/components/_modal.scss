@@ -73,15 +73,20 @@
             h2 {
                 flex: 1 1 auto;
                 margin: 0;
+                font-weight: inherit;
+                @media screen and (max-width: 600px) {
+                    font-size: 24px;
+                }
             }
             .btn {
                 flex: 0 0 auto;
                 color: white;
                 background-color: transparent;
+                font-weight: inherit;
             }
         }
-        .input-group {
-            margin: 10px 0;
+        .input-group:not(:last-child) {
+            margin: 30px 0;
         }
         label {
             display: inline-block;
@@ -102,7 +107,6 @@
             width: auto;
             height: 60px;
             line-height: 60px;
-            margin-top: 20px;
         }
     }
 }
