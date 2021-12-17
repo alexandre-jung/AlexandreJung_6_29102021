@@ -79,7 +79,7 @@ export default class Photographer extends View {
             if (likeButton) {
                 const likeValueElement = likeButton.querySelector('.total-likes');
                 if (likeValueElement && !likeButton.disabled) {
-                    const currentMediaIdx = contentData.media.findIndex(function(media) {
+                    const currentMediaIdx = contentData.media.findIndex(function (media) {
                         return media.id == likeValueElement.dataset.mediaId;
                     });
                     if (currentMediaIdx != -1) {
@@ -91,7 +91,7 @@ export default class Photographer extends View {
                             likeValueElement.textContent = totalLikes;
                             likeButton.disabled = true;
                             likeButton.blur();
-                            currentMedia.likes ++;
+                            currentMedia.likes++;
                             currentMedia.alreadyLiked = true;
                         }
                     }
@@ -126,26 +126,18 @@ export default class Photographer extends View {
         const orderMedia = (orderBy = 'popularity') => {
             const photographerMedia = Array.from(mediaContainer.children);
             const orderedPhotographerMedia = photographerMedia.sort(function (mediaA, mediaB) {
-                let criterionA = null;
-                let criterionB = null;
+                let criterionA = mediaA.dataset[orderBy].toLowerCase();
+                let criterionB = mediaB.dataset[orderBy].toLowerCase();
                 switch (orderBy) {
                     case 'popularity':
                         // Caution: reverse criteria
-                        criterionB = Number(mediaA.dataset[orderBy]);
-                        criterionA = Number(mediaB.dataset[orderBy]);
-                        break;
-                    case 'title':
-                        criterionA = mediaA.dataset[orderBy].toLowerCase();
-                        criterionB = mediaB.dataset[orderBy].toLowerCase();
-                        break;
-                    case 'date':
-                        criterionA = new Date(mediaA.dataset[orderBy]);
-                        criterionB = new Date(mediaB.dataset[orderBy]);
+                        [criterionB, criterionA] = [Number(criterionA), Number(criterionB)];
                         break;
                     case 'dateReverse':
                         // Caution: reverse criteria
-                        criterionB = new Date(mediaA.dataset[orderBy]);
-                        criterionA = new Date(mediaB.dataset[orderBy]);
+                        [criterionB, criterionA] = [criterionA, criterionB];
+                    case 'date':
+                        [criterionA, criterionB] = [new Date(criterionA), new Date(criterionB)];
                         break;
                 }
                 return criterionA < criterionB;
