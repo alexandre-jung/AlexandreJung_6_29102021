@@ -3,9 +3,8 @@ export function showModal() {
     const modalCloseBtn = document.querySelector('.modal-close');
     const form = modal.querySelector('form');
 
-    function hideModal(ev) {
+    function hideModal() {
         modal.classList.remove('visible');
-        ev.preventDefault();
         document.body.style.overflowY = 'auto';
         modalCloseBtn.removeEventListener('click', hideModal);
         form.removeEventListener('submit', onSubmit);
@@ -13,8 +12,12 @@ export function showModal() {
     }
 
     function onSubmit(ev) {
-        handleSubmit(form);
-        hideModal(ev);
+        ev.preventDefault();
+        if (handleSubmit(form)) {
+            hideModal(ev);
+        } else {
+            console.log("Le formulaire n'a pas été correctement rempli");
+        }
     }
 
     modal.classList.add('visible');
@@ -30,11 +33,16 @@ export function showModal() {
 }
 
 function handleSubmit(form) {
-    const fields = Array.from(form.elements);
-    fields.filter(isFormField).forEach(function (field) {
-        outputField(field);
-        clearFormField(field);
-    });
+    const formInputs = Array.from(form.elements);
+    const formFields = formInputs.filter(isFormField);
+    if (formFields.every(fieldIsValid)) {
+        formFields.forEach(function (field) {
+            outputField(field);
+            clearFormField(field);
+        });
+        return true;
+    }
+    return false;
 }
 
 function isFormField(field) {
@@ -47,8 +55,24 @@ function clearFormField(field) {
 
 function outputField(field) {
     console.log(
-        `%c${field.dataset.label}:%c ${field.value}`,
+        `%c${field.dataset.label}:%c ${field.value.trim()}`,
         'color: gray; font-style: italic',
         'color: black; font-weight: bold'
     );
+}
+
+const Regex = {
+    text: /^[a-zA-Z]{2,}(?:-[a-zA-Z]{2,})?$/,
+    email: /^[a-z0-9]+([+._-][a-z0-9]+)*@[a-z0-9]+(-[a-z]+)*(\.[a-z]{2,})+$/,
+};
+
+const Validator = {
+    textarea: field => field.value.trim() != '',
+    input: field => field.type in Regex && Regex[field.type].test(field.value.trim()),
+};
+
+function fieldIsValid(field) {
+    const tagName = field.tagName.toLowerCase();
+    const validate = Validator[tagName];
+    return validate(field);
 }
