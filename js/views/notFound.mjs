@@ -7,5 +7,9 @@ export default class NotFound extends View {
     }
 
     render = () => {
+        const tabTitle = document.querySelector('title');
+        const pageTitle = document.querySelector('#page-title');
+        tabTitle.textContent = 'Page introuvable | Fisheye';
+        pageTitle.textContent = 'Page introuvable';
     }
 }

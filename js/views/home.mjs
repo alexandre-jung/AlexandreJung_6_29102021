@@ -11,12 +11,12 @@ export default class Home extends View {
     render = (_, contentData) => {
         // Hide home header elements except the logo
         const tagNav = document.querySelector('nav');
-        const homeTitle = document.querySelector('#page-title');
+        const pageTitle = document.querySelector('#page-title');
         tagNav.style.display = 'block';
-        homeTitle.style.display = 'block';
+        pageTitle.style.display = 'block';
 
-        const pageTitle = document.querySelector('title');
-        pageTitle.textContent = 'Accueil';
+        const tabTitle = document.querySelector('title');
+        tabTitle.textContent = 'Accueil | Fisheye';
 
         const filterBy = (new URLSearchParams(location.search)).get('filter_by');
 

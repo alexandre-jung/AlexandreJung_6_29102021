@@ -27,9 +27,9 @@ export default class Photographer extends View {
         const photographer = contentData.photographers[photographerIdx];
 
         // Set document and page titles
-        const pageTitle = document.querySelector('title');
+        const tabTitle = document.querySelector('title');
         const photographerNameTitle = document.querySelector('#photographer-name-title');
-        pageTitle.textContent = photographer.name;
+        tabTitle.textContent = `${photographer.name} | Fisheye`;
         photographerNameTitle.textContent = photographer.name;
 
         // Set photographer informations
