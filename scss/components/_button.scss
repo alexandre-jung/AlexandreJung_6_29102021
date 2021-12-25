@@ -83,6 +83,7 @@
             outline: none;
         }
         &[disabled] {
+            cursor: default;
             color: adjust-color(
                 $color: #D3573C,
                 $saturation: 0%,
