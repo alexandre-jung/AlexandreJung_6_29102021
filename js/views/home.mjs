@@ -13,6 +13,7 @@ export default class Home extends View {
         const tagNav = document.querySelector('nav');
         const pageTitle = document.querySelector('#page-title');
         tagNav.style.display = 'block';
+        pageTitle.textContent = 'Nos photographes';
         pageTitle.style.display = 'block';
 
         const tabTitle = document.querySelector('title');

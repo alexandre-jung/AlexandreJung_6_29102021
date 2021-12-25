@@ -14,16 +14,25 @@ export default class Photographer extends View {
     }
 
     render = ({ id }, contentData) => {
-        // Hide home header elements except the logo
-        const tagNav = document.querySelector('nav');
-        const homeTitle = document.querySelector('#page-title');
-        tagNav.style.display = 'none';
-        homeTitle.style.display = 'none';
-
         // Get data for the current photographer
         const photographerIdx = contentData.photographers.findIndex(function (photographer) {
             return photographer.id == id;
         });
+        if (photographerIdx == -1) {
+            console.log('stopping rendering of photographer');
+            throw new Error('Not found');
+        }
+        
+        // Hide home header elements except the logo
+        const tagNav = document.querySelector('nav');
+        const pageTitle = document.querySelector('#page-title');
+        tagNav.style.display = 'none';
+        pageTitle.style.display = 'none';
+
+        // Show orderBy dropdown
+        const orderBy = document.querySelector('#orderby');
+        orderBy.style.display = 'inline-flex';
+
         const photographer = contentData.photographers[photographerIdx];
 
         // Set document and page titles

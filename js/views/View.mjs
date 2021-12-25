@@ -1,4 +1,5 @@
 import DataFetcher from "../api.mjs";
+import views from "./index.mjs";
 
 export default class View {
 
@@ -22,10 +23,16 @@ export default class View {
             this.templateElement.innerHTML = templateData;
             this.viewRoot.textContent = '';
             this.viewRoot.appendChild(this.templateElement);
-            contentDataFetcher.get().then(contentData => {
-                window.scroll(0, 0);
-                this.render(params ?? {}, contentData);
-            });
+            if (contentDataFetcher) {
+                contentDataFetcher.get().then(contentData => {
+                    window.scroll(0, 0);
+                    this.render(params ?? {}, contentData);
+                }).catch(() => {
+                    views.notFound.renderView()
+                });
+            } else {
+                views.notFound.render();
+            }
         });
     }
 }
