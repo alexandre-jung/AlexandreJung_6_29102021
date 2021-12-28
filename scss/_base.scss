@@ -83,19 +83,8 @@ nav {
 
 #orderby {
     margin-bottom: 3rem;
+    display: none;
 }
 .orderby-label {
     margin-right: 1.5rem;
-}
-
-input,
-textarea {
-    border-radius: 5px;
-    border: none;
-    padding: 15px;
-    font-size: 2rem;
-}
-
-#orderby {
-    display: none;
 }

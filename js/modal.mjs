@@ -20,6 +20,13 @@ export function showModal() {
             console.log("Le formulaire n'a pas été correctement rempli");
         }
     }
+    
+    const formInputs = Array.from(form.elements);
+    const formFields = formInputs.filter(isFormField);
+    formFields.forEach(function(field) {
+        field.dataset.invalid = false;
+        field.nextElementSibling.style.visibility = 'hidden';
+    });
 
     modal.classList.add('visible');
     document.body.style.overflow = 'hidden';
@@ -39,12 +46,23 @@ function handleSubmit(form) {
     const formInputs = Array.from(form.elements);
     const formFields = formInputs.filter(isFormField);
     if (formFields.every(fieldIsValid)) {
+        const firstName = formInputs[0].value;
+        alert(`Merci, ${firstName} !\n\nVos informations ont été correctement renseignées.`);
         formFields.forEach(function (field) {
             outputField(field);
             clearFormField(field);
         });
         return true;
     }
+    formFields.forEach(function(field) {
+        if (!fieldIsValid(field)) {
+            field.dataset.invalid = true;
+            field.nextElementSibling.style.visibility = 'visible';
+        } else {
+            field.dataset.invalid = false;
+            field.nextElementSibling.style.visibility = 'hidden';
+        }
+    });
     return false;
 }
 
