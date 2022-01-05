@@ -1,0 +1,28 @@
+@use '../variables' as *;
+
+.insert {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    color: black;
+    background-color: adjust-color($color-secondary, $lightness: 10%);
+    padding: 15px 10px;
+    border-radius: 5px 5px 0 0;
+    position: fixed;
+    z-index: 11000;
+    bottom: 0;
+    right: 50%;
+    transform: translateX(50%);
+    @media screen and (min-width: 840px) {
+        transform: none;
+        right: 150px;
+    }
+    @media screen and (min-width: 1700px) {
+        right: calc(calc(100vw - 1400px) / 2);
+    }
+    &-likes svg {
+        width: 24px;
+        height: 24px;
+        margin-bottom: -4px;
+    }
+}

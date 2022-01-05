@@ -27,7 +27,8 @@ export default class View {
                 contentDataFetcher.get().then(contentData => {
                     window.scroll(0, 0);
                     this.render(params ?? {}, contentData);
-                }).catch(() => {
+                }).catch(error => {
+                    console.error(error);
                     views.notFound.renderView()
                 });
             } else {

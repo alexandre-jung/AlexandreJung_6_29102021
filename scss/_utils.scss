@@ -49,6 +49,11 @@ $font-sizes: (
     margin-top: 2rem;
 }
 
+.mx-2 {
+    margin-left: 2rem;
+    margin-right: 2rem;
+}
+
 .px-2 {
     padding-left: 4rem !important;
     padding-right: 4rem !important;
@@ -56,4 +61,8 @@ $font-sizes: (
 
 .rfs-1 {
     font-size: 1em;
+}
+
+.nowrap {
+    white-space: nowrap;
 }

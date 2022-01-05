@@ -179,6 +179,21 @@ export default class Photographer extends View {
             });
         });
 
+
+        // Setup the information insert
+        const insertTemplate = getTemplateElement('insert');
+        const insertPlaceholder = document.getElementById('insert');
+        insertPlaceholder.appendChild(insertTemplate.cloneNode(true));
+        const insertElement = insertPlaceholder.querySelector('.insert');
+        const photographerLikes = currentPhotographerMedia.reduce((previous, current) => previous + current.likes, 0);
+        insertElement.querySelector('.insert-likes-value').textContent = photographerLikes;
+        insertElement.querySelector('.insert-daily-charge').textContent = photographer.price;
+
+        // Setup the heart icon
+        // FIXME It cannot be placed directly in the insert template
+        const heartTemplate = getTemplateElement('heart-icon');
+        insertElement.querySelector('.insert-likes').appendChild(heartTemplate.cloneNode(true))
+
         // Setup contact modal
         const contactBtn = document.querySelector('.contact');
         const modalPhotographerName = document.querySelector('#photographer-name');
