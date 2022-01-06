@@ -9,7 +9,8 @@
     "components:server": "live-server --host=localhost --port=8000 --mount=/:./components/ --ignore=node_modules,api,assets,scss,media,.gitignore,*.json .",
     "start": "concurrently -n dev: \"npm:dev:*\" --kill-others",
     "components": "concurrently -n sass,server \"npm:dev:sass\" \"npm:components:server\" --kill-others",
-    "lint": "eslint \"js/**\""
+    "lint": "eslint \"js/**\"",
+    "validate": "node validateData.js"
   },
   "repository": {
     "type": "git",
