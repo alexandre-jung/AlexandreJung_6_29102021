@@ -83,7 +83,14 @@ export default class Photographer extends View {
             }
         }
 
-        document.addEventListener('click', function (ev) {
+        const currentPhotographerMedia = contentData.media.filter(function (media) {
+            return media.photographerId == photographer.id;
+        });
+        let photographerLikes = currentPhotographerMedia.reduce(
+            (previous, current) => previous + current.likes, 0
+         );
+
+        function handleLikeClick(ev) {
             let likeButton = ev.target.closest('.btn.btn-like');
             if (likeButton) {
                 const likeValueElement = likeButton.querySelector('.total-likes');
@@ -103,17 +110,15 @@ export default class Photographer extends View {
                             currentMedia.likes++;
                             currentMedia.alreadyLiked = true;
 
-                            // Update data-popularity of the media element for further ordering
+                            // Update insert likes data-popularity of the media element for further ordering
                             likeButton.closest('[data-popularity]').dataset.popularity++;
+                            document.querySelector('.insert-likes-value').textContent = ++photographerLikes;
                         }
                     }
                 }
             }
-        });
-
-        const currentPhotographerMedia = contentData.media.filter(function (media) {
-            return media.photographerId == photographer.id;
-        });
+        }
+        document.addEventListener('click', handleLikeClick);
 
         const createMediaCard = mediaCardFactory();
         currentPhotographerMedia.forEach(function (media) {
@@ -185,7 +190,6 @@ export default class Photographer extends View {
         const insertPlaceholder = document.getElementById('insert');
         insertPlaceholder.appendChild(insertTemplate.cloneNode(true));
         const insertElement = insertPlaceholder.querySelector('.insert');
-        const photographerLikes = currentPhotographerMedia.reduce((previous, current) => previous + current.likes, 0);
         insertElement.querySelector('.insert-likes-value').textContent = photographerLikes;
         insertElement.querySelector('.insert-daily-charge').textContent = photographer.price;
 
@@ -199,5 +203,9 @@ export default class Photographer extends View {
         const modalPhotographerName = document.querySelector('#photographer-name');
         contactBtn.addEventListener('click', showModal);
         modalPhotographerName.textContent = photographer.name;
+
+        return function() {
+            document.removeEventListener('click', handleLikeClick);
+        }
     }
 }

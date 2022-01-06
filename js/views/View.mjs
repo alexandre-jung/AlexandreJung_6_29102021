@@ -14,6 +14,7 @@ export default class View {
         this.viewRoot = document.querySelector('#root');
         this.templateDataFetcher = new DataFetcher(this.templateURL);
         this.templateElement = null;
+        this.cleanUp = null;
     }
 
     renderView(params, contentDataFetcher) {
@@ -26,14 +27,20 @@ export default class View {
             if (contentDataFetcher) {
                 contentDataFetcher.get().then(contentData => {
                     window.scroll(0, 0);
-                    this.render(params ?? {}, contentData);
+                    if (this.cleanUp) {
+                        this.cleanUp();
+                        this.cleanUp = null;
+                    }
+                    this.cleanUp = this.render(params ?? {}, contentData);
                 }).catch(error => {
-                    console.error(error);
                     views.notFound.renderView()
                 });
             } else {
-                views.notFound.render();
+                throw new Error('Could not fetch template');
             }
+        }).catch(error => {
+            console.log(error);
+            document.body.textContent = 'Erreur fatale';
         });
     }
 }
