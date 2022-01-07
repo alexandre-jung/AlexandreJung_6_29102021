@@ -159,7 +159,8 @@ export default class Photographer extends View {
                         break;
                     default:
                 }
-                return criterionA < criterionB;
+                if (criterionA == criterionB) return 0;
+                return criterionA < criterionB ? 1 : -1;
             });
             const mediaSources = [];
             orderedPhotographerMedia.forEach(function (media) {
