@@ -4,14 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:sass": "sass --watch ./scss/main.scss ./css/main.css",
-    "dev:server": "live-server --host=localhost --port=80 --entry-file=./index.html",
-    "components:server": "live-server --host=localhost --port=8000 --mount=/:./components/ --ignore=node_modules,api,assets,scss,media,.gitignore,*.json .",
-    "start": "concurrently -n dev: \"npm:dev:*\" --kill-others",
-    "components": "concurrently -n sass,server \"npm:dev:sass\" \"npm:components:server\" --kill-others",
-    "check": "eslint \"js/**\"",
-    "lint": "eslint \"js/**\" --fix",
-    "validate": "node validateData.js"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "check": "eslint \"src/js/**\"",
+    "lint": "eslint \"src/js/**\" --fix",
+    "validate": "node scripts/validateData.js"
   },
   "repository": {
     "type": "git",
@@ -24,11 +22,10 @@
   },
   "homepage": "https://github.com/alexandre-jung/AlexandreJung_6_29102021#readme",
   "dependencies": {
-    "concurrently": "^6.4.0",
-    "live-server": "^1.1.0",
     "sass": "^1.44.0"
   },
   "devDependencies": {
+    "vite": "^2.7.2",
     "eslint": "^8.4.1"
   }
 }

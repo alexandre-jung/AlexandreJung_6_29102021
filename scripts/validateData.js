@@ -2,7 +2,7 @@
 // 1. check photographers for duplicate IDs
 // 2. check media for duplicate IDs
 
-const data = require("./api/data.json");
+const data = require("../src/public/api/data.json");
 const photographers = data.photographers;
 const media = data.media;
 

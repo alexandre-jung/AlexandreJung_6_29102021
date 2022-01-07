@@ -1,3 +1,4 @@
+import '../scss/main.scss';
 import './dropdown.mjs';
 import DataFetcher from './api.mjs';
 import Router from './router.mjs';
