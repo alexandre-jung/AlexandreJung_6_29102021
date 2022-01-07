@@ -5,14 +5,13 @@
         margin: 0;
         padding: 0;
     }
-    a, img {
+    .media-placeholder {
         display: block;
-    }
-    img {
         width: 100%;
         object-fit: cover;
         border-radius: 0.5rem;
         height: 300px;
+        cursor: pointer;
     }
     &-description {
         display: flex;
@@ -83,7 +82,6 @@
         display: block;
         text-decoration: none;
         border-radius: 0.5rem;
-        // white-space: nowrap;
         text-align: center;
         &:focus {
             outline: 2px solid black;
