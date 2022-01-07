@@ -1,3 +1,5 @@
+@use '../variables' as *;
+
 .lightbox {
     position: fixed;
     top: 0;
@@ -7,7 +9,7 @@
     background-color: white;
     display: none;
     z-index: 9999;
-    padding: 5rem 0;
+    padding: 5rem 0 8rem;
     &.visible {
         display: flex;
     }
@@ -30,6 +32,15 @@
     z-index: 1;
     @media screen and (max-width: 1200px) and (orientation: portrait) {
         padding: 12rem 0;
+    }
+}
+.lightbox-title {
+    color: $color-primary;
+    text-align: center;
+    @media screen and (max-width: 1200px) and (orientation: portrait) {
+        position: absolute;
+        top: 0;
+        left: 20px;
     }
 }
 .lightbox-btn {

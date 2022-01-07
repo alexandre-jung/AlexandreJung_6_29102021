@@ -68,7 +68,7 @@ export default class Photographer extends View {
             return function (src, title, likes, mediaId, disabled) {
                 const mediaCard = mediaTemplate.cloneNode(true);
                 const mediaPlaceholder = mediaCard.querySelector('.media-placeholder');
-                const mediaFragment = createMedia(src);
+                const mediaFragment = createMedia(src, title);
                 const likesElement = mediaCard.querySelector('.total-likes')
                 likesElement.textContent = likes;
                 likesElement.dataset.value = likes;
@@ -164,8 +164,10 @@ export default class Photographer extends View {
             const mediaSources = [];
             orderedPhotographerMedia.forEach(function (media) {
                 mediaContainer.insertBefore(media, mediaContainer.children[0]);
-                const mediaSrc = media.querySelector('img, video').getAttribute('src');
-                mediaSources.unshift(mediaSrc);
+                let mediaElement = media.querySelector('img, video');
+                const mediaSrc = mediaElement.getAttribute('src');
+                const mediaTitle = mediaElement.dataset.title;
+                mediaSources.unshift({ src: mediaSrc, title: mediaTitle });
             });
             this.lightbox.setAllMediaSources(mediaSources);
             return mediaSources;

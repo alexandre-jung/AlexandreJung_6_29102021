@@ -26,12 +26,21 @@ export default class Lightbox {
         })
     }
     setAllMediaSources(allMediaSources) {
-        this.allMediaSources = allMediaSources;
+        this.allMediaSources = allMediaSources.map(media => media.src);
+        this.allMediaTitles = allMediaSources.map(media => media.title);
     }
     update(currentMediaSource) {
         const currentMediaIdx = this.allMediaSources.indexOf(currentMediaSource);
         const previousMediaSrc = this.allMediaSources[rotateIndex(currentMediaIdx - 1, this.allMediaSources.length - 1)];
         const nextMediaSrc = this.allMediaSources[rotateIndex(currentMediaIdx + 1, this.allMediaSources.length - 1)];
+        const currentMediaTitle = this.allMediaTitles[currentMediaIdx];
+
+        function getTitleElement() {
+            const titleElement = document.createElement('h2');
+            titleElement.textContent = currentMediaTitle;
+            titleElement.classList.add('lightbox-title');
+            return titleElement;
+        }
 
         const mediaElement = this.mediaFactory(currentMediaSource);
         if (mediaElement instanceof HTMLVideoElement) {
@@ -39,6 +48,7 @@ export default class Lightbox {
         }
         this.placeholder.textContent = '';
         this.placeholder.append(mediaElement);
+        this.placeholder.append(getTitleElement());
         this.previousBtn.dataset.ref = previousMediaSrc;
         this.nextBtn.dataset.ref = nextMediaSrc;
     }

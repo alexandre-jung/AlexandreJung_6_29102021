@@ -39,16 +39,19 @@ export function videoFactory() {
 export function mediaFactory(base = '/media/') {
     const createImage = imageFactory();
     const createVideo = videoFactory();
-    return function (source) {
+    return function (source, title) {
         if (source) {
+            let mediaElement = null;
             if (source.endsWith('.jpg')) {
-                return createImage(`${base}${source}`);
+                mediaElement = createImage(`${base}${source}`);
             } else if (source.endsWith('.mp4')) {
-                return createVideo(`${base}${source}`);
+                mediaElement = createVideo(`${base}${source}`);
             } else {
                 console.error('unknown media format');
                 return;
             }
+            mediaElement.dataset.title = title;
+            return mediaElement;
         } else {
             console.error('param source is undefined');
         }
