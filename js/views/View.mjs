@@ -32,7 +32,7 @@ export default class View {
                         this.cleanUp = null;
                     }
                     this.cleanUp = this.render(params ?? {}, contentData);
-                }).catch(error => {
+                }).catch(() => {
                     views.notFound.renderView()
                 });
             } else {
