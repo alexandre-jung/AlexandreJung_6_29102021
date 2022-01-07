@@ -74,7 +74,7 @@
             font-size: 1em;
             height: 0.75em;
             fill: currentColor;
-            margin-right: (1em / 3);
+            margin-right: calc(1em / 3);
         }
         &:hover {
             color: $color-secondary;

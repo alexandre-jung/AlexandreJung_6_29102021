@@ -1,3 +1,4 @@
+@use 'sass:math';
 @use '../variables' as *;
 
 .card-photo {
@@ -39,9 +40,9 @@
 .ratio-box {
     position: relative;
     display: block;
-    padding-top: 300 / 350 * 100%;
+    padding-top: math.div(300, 350) * 100%;
     &.wide {
-        padding-top: 190 / 335 * 100%;
+        padding-top: math.div(190,  335) * 100%;
     }
     &.square {
         padding-top: 100%;
@@ -55,9 +56,9 @@
         left: 0;
     }
     &.auto {
-        padding-top: 300 / 350 * 100%;
+        padding-top: math.div(300,  350) * 100%;
         @media screen and (max-width: 800px) {
-            padding-top: 190 / 335 * 100%;
+            padding-top: math.div(190,  335) * 100%;
         }
     }
 }
