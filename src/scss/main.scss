@@ -9,3 +9,8 @@
 @use 'components/modal';
 @use 'components/insert';
 @use 'layout';
+
+html {
+    visibility: visible;
+    opacity: 1;
+}
