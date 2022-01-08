@@ -25,35 +25,43 @@ export default class View {
             document.body.append(error);
         }
 
-        this.templateDataFetcher.get().then(templateData => {
+        const fetchData = new Promise((async (resolve, reject) => {
+            try {
+                const applicationData = await contentDataFetcher.get();
+                const templateData = await this.templateDataFetcher.get();
+                resolve({applicationData, templateData});
+            } catch (error) {
+                reject(error);
+            }
+        }));
+
+        fetchData.then(({applicationData, templateData}) => {
+
+            // Display the template
             this.templateElement = document.createElement('div');
             this.templateElement.innerHTML = templateData;
             this.viewRoot.textContent = '';
             this.viewRoot.appendChild(this.templateElement);
-            if (contentDataFetcher) {
-                contentDataFetcher.get().then(
-                    contentData => {
-                        // Data successfully fetched
-                        window.scroll(0, 0);
-                        if (this.cleanUp) {
-                            this.cleanUp();
-                            this.cleanUp = null;
-                        }
-                        try {
-                            this.cleanUp = this.render(params ?? {}, contentData);
-                        } catch(error) {
-                            // Error during render
-                            if (error instanceof NotFoundError) {
-                                views.notFound.renderView(null, contentDataFetcher)
-                            } else {
-                                displayError(error);
-                            }
-                        }
-                    // Error while fetching pplication data
-                    }, displayError
-                );
+            window.scroll(0, 0);
+
+            // Run the cleaning function
+            if (this.cleanUp) {
+                this.cleanUp();
+                this.cleanUp = null;
             }
-        // Error while fetching template data
+
+            try {
+                // Render the view
+                this.cleanUp = this.render(params ?? {}, applicationData);
+            } catch(error) {
+                // Error during render
+                if (error instanceof NotFoundError) {
+                    views.notFound.renderView(null, contentDataFetcher)
+                } else {
+                    displayError(error);
+                }
+            }
+        // Error while fetching data
         }).catch(displayError);
     }
 }
