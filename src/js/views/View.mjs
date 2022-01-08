@@ -1,4 +1,5 @@
 import DataFetcher from "../api.mjs";
+import NotFoundError from "../exceptions/NotFound.mjs";
 import views from "./index.mjs";
 
 export default class View {
@@ -18,6 +19,11 @@ export default class View {
     }
 
     renderView(params, contentDataFetcher) {
+        
+        function displayError(error, message = 'An error occured.') {
+            document.body.innerHTML = `${message}<br>Details:<br>`;
+            document.body.append(error);
+        }
 
         this.templateDataFetcher.get().then(templateData => {
             this.templateElement = document.createElement('div');
@@ -25,22 +31,29 @@ export default class View {
             this.viewRoot.textContent = '';
             this.viewRoot.appendChild(this.templateElement);
             if (contentDataFetcher) {
-                contentDataFetcher.get().then(contentData => {
-                    window.scroll(0, 0);
-                    if (this.cleanUp) {
-                        this.cleanUp();
-                        this.cleanUp = null;
-                    }
-                    this.cleanUp = this.render(params ?? {}, contentData);
-                }).catch(() => {
-                    views.notFound.renderView()
-                });
-            } else {
-                throw new Error('Could not fetch template');
+                contentDataFetcher.get().then(
+                    contentData => {
+                        // Data successfully fetched
+                        window.scroll(0, 0);
+                        if (this.cleanUp) {
+                            this.cleanUp();
+                            this.cleanUp = null;
+                        }
+                        try {
+                            this.cleanUp = this.render(params ?? {}, contentData);
+                        } catch(error) {
+                            // Error during render
+                            if (error instanceof NotFoundError) {
+                                views.notFound.renderView(null, contentDataFetcher)
+                            } else {
+                                displayError(error);
+                            }
+                        }
+                    // Error while fetching pplication data
+                    }, displayError
+                );
             }
-        }).catch(error => {
-            console.log(error);
-            document.body.textContent = 'Erreur fatale';
-        });
+        // Error while fetching template data
+        }).catch(displayError);
     }
 }

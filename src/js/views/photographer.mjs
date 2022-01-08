@@ -5,6 +5,7 @@ import { getTemplateElement } from "../utils.mjs";
 import { setupDropdown } from "../dropdown.mjs";
 import Lightbox from "../lightbox.mjs";
 import { showModal } from '../modal.mjs';
+import NotFoundError from "../exceptions/NotFound.mjs";
 
 export default class Photographer extends View {
 
@@ -19,8 +20,7 @@ export default class Photographer extends View {
             return photographer.id == id;
         });
         if (photographerIdx == -1) {
-            console.log('stopping rendering of photographer');
-            throw new Error('Not found');
+            throw new NotFoundError('Photographer not found');
         }
         
         // Hide home header elements except the logo

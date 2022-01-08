@@ -7,7 +7,7 @@ export async function fetchData(url, onSuccess) {
             } else {
                 return response.text();
             }
-        }
+        } else throw new Error(`Could not fetch ${url}`);
     }).then(data => {
         if (onSuccess) {
             onSuccess(data);
