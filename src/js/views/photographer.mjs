@@ -60,8 +60,6 @@ export default class Photographer extends View {
             });
         }
 
-        const mediaContainer = document.querySelector('.media-container');
-
         function mediaCardFactory() {
             const createMedia = mediaFactory();
             const mediaTemplate = getTemplateElement('media-card');
@@ -121,6 +119,9 @@ export default class Photographer extends View {
         document.addEventListener('click', handleLikeClick);
 
         const createMediaCard = mediaCardFactory();
+        const mediaRoot = document.querySelector('#media-root');
+        const mediaContainer = document.createElement('div');
+        mediaContainer.classList.add('grid');
         currentPhotographerMedia.forEach(function (media) {
             const mediaFragment = createMediaCard(
                 media.image ?? media.video,
@@ -138,6 +139,7 @@ export default class Photographer extends View {
             mediaElement.title = `${media.title}\n${media.date}`;
             mediaContainer.append(mediaFragment);
         });
+        mediaRoot.append(mediaContainer);
 
 
         const orderMedia = (orderBy = 'popularity') => {
@@ -179,9 +181,10 @@ export default class Photographer extends View {
 
         this.lightbox.setAllMediaSources(mediaSources);
         document.querySelectorAll(
-            '.media-container img, .media-container video'
+            '#media-root img, #media-root video'
         ).forEach(media => {
             media.addEventListener('click', ev => {
+                console.log('clicked media');
                 this.lightbox.update(ev.target.dataset.ref);
                 this.lightbox.show();
             });
@@ -195,7 +198,6 @@ export default class Photographer extends View {
         const insertElement = insertPlaceholder.querySelector('.insert');
         insertElement.querySelector('.insert-likes-value').textContent = photographerLikes;
         insertElement.querySelector('.insert-daily-charge').textContent = photographer.price;
-
         // Setup the heart icon
         // FIXME It cannot be placed directly in the insert template
         const heartTemplate = getTemplateElement('heart-icon');

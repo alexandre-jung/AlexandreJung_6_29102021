@@ -41,4 +41,4 @@ function main() {
     runRouter(location);
 }
 
-window.addEventListener('load', main);
+document.addEventListener('DOMContentLoaded', main);
