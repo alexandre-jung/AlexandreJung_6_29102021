@@ -57,12 +57,14 @@ export default class Lightbox {
         this.previousBtn.addEventListener('click', this.previous);
         this.nextBtn.addEventListener('click', this.next);
         window.addEventListener('popstate', this.hide);
+        document.body.style.overflowY = 'hidden';
     }
     hide = () => {
         this.modal.classList.remove('visible');
         this.previousBtn.removeEventListener('click', this.previous);
         this.nextBtn.removeEventListener('click', this.next);
         window.removeEventListener('popstate', this.hide);
+        document.body.style.overflowY = 'auto';
     }
     hideOnEscapeKey = ev => {
         if (ev.key == 'Escape') {
