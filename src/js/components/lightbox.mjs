@@ -12,18 +12,29 @@ export default class Lightbox {
         this.mediaFactory = mediaFactory('');
         this.setupEvents();
     }
+    /**
+     * Add handlers for lightbox buttons.
+     */
     setupEvents() {
-        document.addEventListener('keydown', this.hideOnEscapeKey);
         this.closeBtn.addEventListener('click', this.hide);
         this.previousBtn.addEventListener('click', this.previous);
         this.nextBtn.addEventListener('click', this.next);
-        document.addEventListener('keydown', ev => {
-            if (ev.key == 'ArrowLeft') {
-                this.previous(ev);
-            } else if (ev.key == 'ArrowRight') {
-                this.next(ev);
-            }
-        })
+    }
+    /**
+     * Add handlers for document and window events.
+     */
+    destroyGlobalEvents() {
+        window.removeEventListener('popstate', this.hide);
+        document.removeEventListener('keydown', this.hideOnEscapeKey);
+        document.removeEventListener('keydown', this.handleArrowKeys);
+    }
+    /**
+     * Remove handlers for document and window events.
+     */
+    setupGlobalEvents() {
+        window.addEventListener('popstate', this.hide);
+        document.addEventListener('keydown', this.hideOnEscapeKey);
+        document.addEventListener('keydown', this.handleArrowKeys);
     }
     setAllMediaSources(allMediaSources) {
         this.allMediaSources = allMediaSources.map(media => media.src);
@@ -54,21 +65,24 @@ export default class Lightbox {
     }
     show = () => {
         this.modal.classList.add('visible');
-        this.previousBtn.addEventListener('click', this.previous);
-        this.nextBtn.addEventListener('click', this.next);
-        window.addEventListener('popstate', this.hide);
         document.body.style.overflowY = 'hidden';
+        this.setupGlobalEvents();
     }
     hide = () => {
         this.modal.classList.remove('visible');
-        this.previousBtn.removeEventListener('click', this.previous);
-        this.nextBtn.removeEventListener('click', this.next);
-        window.removeEventListener('popstate', this.hide);
         document.body.style.overflowY = 'auto';
+        this.destroyGlobalEvents();
     }
     hideOnEscapeKey = ev => {
         if (ev.key == 'Escape') {
             this.hide();
+        }
+    }
+    handleArrowKeys = ev => {
+        if (ev.key == 'ArrowLeft') {
+            this.previous(ev);
+        } else if (ev.key == 'ArrowRight') {
+            this.next(ev);
         }
     }
     previous = ev => {
