@@ -2,9 +2,9 @@ import View from "./View.mjs";
 import { tagFactory } from "../factories/ui.mjs";
 import { mediaFactory } from "../factories/ui.mjs";
 import { getTemplateElement } from "../utils.mjs";
-import { setupDropdown } from "../dropdown.mjs";
-import Lightbox from "../lightbox.mjs";
-import { showModal } from '../modal.mjs';
+import { setupDropdown } from "../components/dropdown.mjs";
+import Lightbox from "../components/lightbox.mjs";
+import { showModal } from '../components/modal.mjs';
 import NotFoundError from "../exceptions/NotFound.mjs";
 
 export default class Photographer extends View {

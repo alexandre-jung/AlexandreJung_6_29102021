@@ -1,5 +1,5 @@
-import { mediaFactory } from "./factories/ui.mjs";
-import { rotateIndex } from "./utils.mjs";
+import { mediaFactory } from "../factories/ui.mjs";
+import { rotateIndex } from "../utils.mjs";
 
 export default class Lightbox {
     constructor() {
