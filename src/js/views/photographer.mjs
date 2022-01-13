@@ -29,10 +29,6 @@ export default class Photographer extends View {
         tagNav.style.display = 'none';
         pageTitle.style.display = 'none';
 
-        // Show orderBy dropdown
-        const orderBy = document.querySelector('#orderby');
-        orderBy.style.display = 'inline-flex';
-
         const photographer = contentData.photographers[photographerIdx];
 
         // Set document and page titles
