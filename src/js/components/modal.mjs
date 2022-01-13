@@ -1,4 +1,4 @@
-export function showModal() {
+export function showModal(onHide) {
     const modal = document.querySelector('.contact-modal');
     const modalCloseBtn = document.querySelector('.modal-close');
     const form = modal.querySelector('form');
@@ -10,6 +10,8 @@ export function showModal() {
         form.removeEventListener('submit', onSubmit);
         document.removeEventListener('keydown', hideModal);
         window.removeEventListener('popstate', hideModal);
+        modal.removeEventListener('keydown', trapFocusWithin);
+        if (onHide) onHide();
     }
 
     function onSubmit(ev) {
@@ -30,6 +32,23 @@ export function showModal() {
 
     modal.classList.add('visible');
     document.body.style.overflow = 'hidden';
+
+    // Trap focus in the modal
+    const firstInput = modal.querySelector('input');
+    const lastInput = modal.querySelector('input:last-child');
+    function trapFocusWithin(ev) {
+        if (ev.key == 'Tab') {
+            if (ev.target == firstInput && ev.getModifierState('Shift')) {
+                ev.preventDefault();
+                lastInput.focus();
+            } else if (ev.target == lastInput && !ev.getModifierState('Shift')) {
+                ev.preventDefault();
+                firstInput.focus();
+            }
+        }
+    }
+    modal.addEventListener('keydown', trapFocusWithin);
+    firstInput.focus();
 
     modalCloseBtn.addEventListener('click', hideModal);
     form.addEventListener('submit', onSubmit);

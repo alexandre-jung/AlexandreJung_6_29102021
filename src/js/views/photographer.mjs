@@ -48,6 +48,7 @@ export default class Photographer extends View {
         photographerCountry.textContent = photographer.country;
         photographerTagline.textContent = photographer.tagline;
         photographerProfilePhoto.setAttribute('src', generateThumbnailFilename(`/media/${photographer.portrait}`));
+        photographerProfilePhoto.alt = photographer.name;
 
         if (photographerTags) {
             const createTag = tagFactory();
@@ -133,7 +134,15 @@ export default class Photographer extends View {
             mediaElement.dataset.dateReverse = new Date(media.date);
             mediaElement.dataset.title = media.title;
             mediaElement.title = `${media.title}\n${media.date}`;
+
             mediaContainer.append(mediaFragment);
+
+            mediaElement.querySelector('img, video').addEventListener('focus', ({target}) => {
+                const placeholder = target.closest('.media-placeholder');
+                placeholder.classList.add('outline-primary');
+                target.addEventListener('blur', () => placeholder.classList.remove('outline-primary'));
+                target.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            });
         });
         mediaRoot.append(mediaContainer);
 
@@ -179,11 +188,15 @@ export default class Photographer extends View {
         document.querySelectorAll(
             '#media-root img, #media-root video'
         ).forEach(media => {
-            media.addEventListener('click', ev => {
-                console.log('clicked media');
-                this.lightbox.update(ev.target.dataset.ref);
-                this.lightbox.show();
-            });
+            const handleShowModal = ev => {
+                if (ev.type == 'click' || ev.type == 'keydown' && ev.key == 'Enter') {
+                    this.lightbox.update(ev.target.dataset.ref);
+                    this.lightbox.show(ev);
+                    ev.preventDefault();
+                }
+            }
+            media.addEventListener('click', handleShowModal);
+            media.addEventListener('keydown', handleShowModal);
         });
 
 
@@ -202,8 +215,23 @@ export default class Photographer extends View {
         // Setup contact modal
         const contactBtn = document.querySelector('.contact');
         const modalPhotographerName = document.querySelector('#photographer-name');
-        contactBtn.addEventListener('click', showModal);
+        function handleModalHide() {
+            contactBtn.focus();
+        }
+        contactBtn.addEventListener('click', () => showModal(handleModalHide));
         modalPhotographerName.textContent = photographer.name;
+
+        if (location.hash == '#root')
+            history.pushState(null, null, location.pathname + '#media-root');
+        document.body.focus();
+        if (location.hash == '#media-root') {
+            // Delay for Chrome as the focus isn't set if called to quickly after the previous one.
+            setTimeout(() =>
+                document.querySelector(
+                    '.media-placeholder video, .media-placeholder img'
+                )?.focus(), 0
+            );
+        }
 
         return function() {
             document.removeEventListener('click', handleLikeClick);

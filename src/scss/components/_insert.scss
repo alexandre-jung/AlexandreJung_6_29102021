@@ -12,7 +12,8 @@
     z-index: 9000;
     bottom: 0;
     right: 50%;
-    transform: translateX(50%);
+    transform: translateX(50%) scale(0.8);
+    transform-origin: bottom;
     @media screen and (min-width: 840px) {
         transform: none;
         right: 150px;

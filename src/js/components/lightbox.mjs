@@ -10,6 +10,7 @@ export default class Lightbox {
         this.placeholder = this.modal.querySelector('.lightbox-placeholder');
         this.allMediaSources = null;
         this.mediaFactory = mediaFactory('');
+        this.previousFocus = null;
         this.setupEvents();
     }
     /**
@@ -22,19 +23,23 @@ export default class Lightbox {
     }
     /**
      * Add handlers for document and window events.
-     */
-    destroyGlobalEvents() {
-        window.removeEventListener('popstate', this.hide);
-        document.removeEventListener('keydown', this.hideOnEscapeKey);
-        document.removeEventListener('keydown', this.handleArrowKeys);
-    }
-    /**
-     * Remove handlers for document and window events.
+     * Called when showing modal.
      */
     setupGlobalEvents() {
         window.addEventListener('popstate', this.hide);
         document.addEventListener('keydown', this.hideOnEscapeKey);
         document.addEventListener('keydown', this.handleArrowKeys);
+        document.addEventListener('keydown', this.trapFocusWithin);
+    }
+    /**
+     * Remove handlers for document and window events.
+     * Called when hiding modal.
+     */
+    destroyGlobalEvents() {
+        window.removeEventListener('popstate', this.hide);
+        document.removeEventListener('keydown', this.hideOnEscapeKey);
+        document.removeEventListener('keydown', this.handleArrowKeys);
+        this.releaseFocus();
     }
     setAllMediaSources(allMediaSources) {
         this.allMediaSources = allMediaSources.map(media => media.src);
@@ -45,6 +50,7 @@ export default class Lightbox {
         const previousMediaSrc = this.allMediaSources[rotateIndex(currentMediaIdx - 1, this.allMediaSources.length - 1)];
         const nextMediaSrc = this.allMediaSources[rotateIndex(currentMediaIdx + 1, this.allMediaSources.length - 1)];
         const currentMediaTitle = this.allMediaTitles[currentMediaIdx];
+        this.currentMediaSource = currentMediaSource;
 
         function getTitleElement() {
             const titleElement = document.createElement('h2');
@@ -53,7 +59,10 @@ export default class Lightbox {
             return titleElement;
         }
 
-        const mediaElement = this.mediaFactory(generateFilename(currentMediaSource));
+        const mediaElement = this.mediaFactory(
+            generateFilename(currentMediaSource),
+            currentMediaTitle,
+        );
         if (mediaElement instanceof HTMLVideoElement) {
             mediaElement.setAttribute('controls', true);
         }
@@ -64,14 +73,21 @@ export default class Lightbox {
         this.nextBtn.dataset.ref = nextMediaSrc;
     }
     show = () => {
+        this.previousFocus = document.activeElement;
         this.modal.classList.add('visible');
         document.body.style.overflowY = 'hidden';
         this.setupGlobalEvents();
+        this.closeBtn.focus();
     }
     hide = () => {
         this.modal.classList.remove('visible');
         document.body.style.overflowY = 'auto';
         this.destroyGlobalEvents();
+        if (this.previousFocus) {
+            this.previousFocus.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            this.previousFocus.focus({ preventScroll: true });
+            this.previousFocus = null;
+        }
     }
     hideOnEscapeKey = ev => {
         if (ev.key == 'Escape') {
@@ -79,6 +95,8 @@ export default class Lightbox {
         }
     }
     handleArrowKeys = ev => {
+        if (ev.target.nodeName == 'VIDEO')
+            return;
         if (ev.key == 'ArrowLeft') {
             this.previous(ev);
         } else if (ev.key == 'ArrowRight') {
@@ -87,8 +105,25 @@ export default class Lightbox {
     }
     previous = () => {
         this.update(this.previousBtn.dataset.ref);
+        this.previousFocus = document.querySelector(`[src="${this.currentMediaSource}"]`);
+        console.log(this.currentMediaSource);
     }
     next = () => {
         this.update(this.nextBtn.dataset.ref);
+        this.previousFocus = document.querySelector(`[src="${this.currentMediaSource}"]`);
+    }
+    trapFocusWithin = ev => {
+        if (ev.key == 'Tab') {
+            if (ev.target === this.nextBtn && !ev.getModifierState('Shift')) {
+                ev.preventDefault();
+                this.closeBtn.focus();
+            } else if (ev.target === this.closeBtn && ev.getModifierState('Shift')) {
+                ev.preventDefault();
+                this.nextBtn.focus();
+            }
+        }
+    }
+    releaseFocus = () => {
+        document.removeEventListener('keydown', this.trapFocusWithin);
     }
 }
