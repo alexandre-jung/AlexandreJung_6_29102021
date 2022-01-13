@@ -2,11 +2,20 @@
 // 1. check photographers for duplicate IDs
 // 2. check media for duplicate IDs
 
-const data = require("../src/public/api/data.json");
+const dataFile = "../src/public/api/data.json";
+let data = null;
+
+try {
+  data = require(dataFile);
+} catch(error) {
+  console.log(`Could not find ${dataFile}`);
+  return;
+}
 const photographers = data.photographers;
 const media = data.media;
 
 const checkedIds = new Set();
+let allOk = true;
 photographers.forEach((photographer) => {
   const id = photographer.id;
   if (!checkedIds.has(id)) {
@@ -16,6 +25,7 @@ photographers.forEach((photographer) => {
     }, 0);
     if (count > 1) {
       console.error(`Duplicate photographer ID ${id} (found ${count}).`);
+      allOk = false;
     }
     checkedIds.add(id);
   }
@@ -31,7 +41,12 @@ media.forEach((current) => {
     }, 0);
     if (count > 1) {
       console.error(`Duplicate media ID ${id} (found ${count}).`);
+      allOk = false;
     }
     checkedIds.add(id);
   }
 });
+
+if (allOk) {
+  console.log('Everything is ok !');
+}
