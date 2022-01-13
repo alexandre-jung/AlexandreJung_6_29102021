@@ -70,6 +70,9 @@
     justify-content: center;
     flex: 0 0 10rem;
     margin: 0 5rem;
+    @media screen and (max-height: 500px) {
+        justify-content: flex-end;
+    }
     @media screen and (max-width: 1200px) and (orientation: portrait) {
         order: 1;
         position: absolute;
