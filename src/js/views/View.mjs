@@ -25,17 +25,13 @@ export default class View {
             document.body.append(error);
         }
 
-        const fetchData = new Promise((async (resolve, reject) => {
-            try {
-                const applicationData = await contentDataFetcher.get();
-                const templateData = await this.templateDataFetcher.get();
-                resolve({applicationData, templateData});
-            } catch (error) {
-                reject(error);
-            }
-        }));
+        const fetchData = async () => {
+            const applicationData = await contentDataFetcher.get();
+            const templateData = await this.templateDataFetcher.get();
+            return {applicationData, templateData};
+        };
 
-        fetchData.then(({applicationData, templateData}) => {
+        fetchData().then(({applicationData, templateData}) => {
 
             // Display the template
             this.templateElement = document.createElement('div');
