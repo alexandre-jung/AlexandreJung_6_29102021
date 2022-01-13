@@ -44,16 +44,17 @@ export function mediaFactory(base = '/media/', useThumbnail = false) {
     return function (source, title) {
         if (source) {
             let mediaElement = null;
-            console.log(source)
             if (source.endsWith('.jpg')) {
                 const file = useThumbnail ? generateThumbnailFilename(source) : source;
                 mediaElement = createImage(`${base}${file}`);
+                mediaElement.alt = title;
             } else if (source.endsWith('.mp4')) {
                 mediaElement = createVideo(`${base}${source}`);
             } else {
                 console.error('unknown media format');
                 return;
             }
+            mediaElement.tabIndex = 0;
             mediaElement.dataset.title = title;
             return mediaElement;
         } else {

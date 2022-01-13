@@ -49,6 +49,7 @@ export default class View {
             try {
                 // Render the view
                 this.cleanUp = this.render(params ?? {}, applicationData);
+                window.scrollTo(0, 0);
             } catch(error) {
                 // Error during render
                 if (error instanceof NotFoundError) {

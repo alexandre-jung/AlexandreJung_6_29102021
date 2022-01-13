@@ -64,8 +64,8 @@
 }
 
 .rounded {
-    border-radius: 50%;
-    overflow: hidden;
+    border-radius: 50% !important;
+    overflow: hidden !important;
 }
 
 .card-photographer {
@@ -86,7 +86,7 @@
         border-radius: 0.5rem;
         text-align: center;
         &:focus {
-            outline: 2px solid black;
+            outline: 4px solid $color-primary !important;
         }
     }
     .img-wrapper {

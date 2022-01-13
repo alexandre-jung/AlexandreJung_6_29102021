@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 *,
 ::before,
 ::after {
@@ -86,4 +88,42 @@ nav {
 }
 .orderby-label {
     margin-right: 1.5rem;
+}
+
+video:focus,
+img:focus {
+    outline: 4px solid $color-primary;
+}
+
+.card-photographer .image-link img,
+.media-placeholder video,
+.media-placeholder img {
+    transition: transform 500ms ease-in-out;
+}
+
+.card-photographer .image-link:focus img,
+.card-photographer .image-link:hover img,
+.media-placeholder video:focus,
+.media-placeholder img:focus,
+.media-placeholder video:hover,
+.media-placeholder img:hover {
+    transform: scale(1.1);
+}
+
+:not(body):focus {
+    outline: 2px solid black !important;
+}
+
+.lightbox-placeholder * {
+    outline: none !important;
+}
+
+#home-link {
+    display: inline-block;
+    padding: 2rem;
+    margin: -2rem;
+    border-radius: 5px;
+    &:focus {
+        outline: 2px solid black;
+    }
 }

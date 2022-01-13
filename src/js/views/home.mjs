@@ -37,12 +37,17 @@ export default class Home extends View {
         // Display every filtered photographer.
         filteredData.forEach(photographer => {
             const p = photographerTemplate.content.cloneNode(true);
+            const photographerPortrait = p.querySelector('.photographer-portrait');
+            photographerPortrait.src = '/media/' + photographer.portrait;
+            photographerPortrait.alt = photographer.name;
             p.querySelector('.photographer-name').textContent = photographer.name;
             p.querySelector('.photographer-portrait').src = generateThumbnailFilename('/media/' + photographer.portrait);
             p.querySelector('.photographer-city').textContent = photographer.city;
             p.querySelector('.photographer-tagline').textContent = photographer.tagline;
             p.querySelector('.photographer-price').textContent = photographer.price;
-            p.querySelector('.image-link').href = '/photographer/' + photographer.id;
+            const imageLink = p.querySelector('.image-link');
+            imageLink.href = `${import.meta.env.BASE_URL}photographer/` + photographer.id;
+            imageLink.addEventListener('focus', () => imageLink.scrollIntoView({ block: 'center', behavior: 'smooth' }));
 
             const tags = p.querySelector('.tag-list');
             if (tags) {
@@ -62,6 +67,20 @@ export default class Home extends View {
             getAllTags(contentData).forEach(tagLabel => {
                 tags.append(createTag(tagLabel, tagLabel == filterBy));
             });
+        }
+
+        if(location.hash == '#root') {
+            setTimeout(() =>
+                document.querySelector('.card-photographer .image-link')?.focus(), 0
+            );
+        } else {
+            const activeTag = document.querySelector('.btn-tag.active');
+            if (activeTag) {
+                activeTag.focus();
+                activeTag.blur();
+            } else {
+                document.body.focus();
+            }
         }
     }
 }

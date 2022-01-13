@@ -66,3 +66,7 @@ $font-sizes: (
 .nowrap {
     white-space: nowrap;
 }
+
+.outline-primary {
+    outline: 4px solid $color-primary;
+}

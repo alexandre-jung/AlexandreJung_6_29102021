@@ -92,3 +92,44 @@
         }
     }
 }
+
+.top-link {
+    display: inline-block !important;
+    border: none !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    user-select: none !important;
+    margin: 0 !important;
+    padding: 0 1.8rem !important;
+    border-radius: 0.5rem !important;
+    height: 7rem !important;
+    line-height: 7rem !important;
+    font-weight: 700 !important;
+
+    z-index: 15001;
+    box-shadow:
+        4px 4px 4px black,
+        0px 0px 15px 15px rgba($color: black, $alpha: 0.1);
+
+    &:focus {
+        position: fixed !important;
+    }
+    top: 17px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#white-overlay {
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+    .top-link:focus + & {
+        position: fixed;
+        z-index: 15000;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: white;
+        opacity: 0.5;
+    }
+}
