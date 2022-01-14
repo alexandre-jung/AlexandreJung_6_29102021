@@ -11,11 +11,12 @@ try {
   console.log(`Could not find ${dataFile}`);
   return;
 }
+
 const photographers = data.photographers;
 const media = data.media;
-
 const checkedIds = new Set();
 let allOk = true;
+
 photographers.forEach((photographer) => {
   const id = photographer.id;
   if (!checkedIds.has(id)) {
@@ -30,8 +31,8 @@ photographers.forEach((photographer) => {
     checkedIds.add(id);
   }
 });
-
 checkedIds.clear();
+
 media.forEach((current) => {
   const id = current.id;
   if (!checkedIds.has(id)) {
@@ -46,7 +47,10 @@ media.forEach((current) => {
     checkedIds.add(id);
   }
 });
+checkedIds.clear();
 
 if (allOk) {
   console.log('Everything is ok !');
+} else {
+  process.exitCode = 1;
 }
