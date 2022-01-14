@@ -85,12 +85,10 @@ export default class Lightbox {
             this.next(ev);
         }
     }
-    previous = ev => {
-        const target = ev.target.closest('.lightbox-btn');
-        this.update((target ? target : this.previousBtn).dataset.ref);
+    previous = () => {
+        this.update(this.previousBtn.dataset.ref);
     }
-    next = ev => {
-        const target = ev.target.closest('.lightbox-btn');
-        this.update((target ? target : this.nextBtn).dataset.ref);
+    next = () => {
+        this.update(this.nextBtn.dataset.ref);
     }
 }
