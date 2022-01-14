@@ -1,6 +1,7 @@
 import View from "./View.mjs";
 import { getAllTags } from "../api.mjs";
 import { tagFactory } from "../factories/ui.mjs";
+import { generateThumbnailFilename } from "../utils.mjs";
 
 export default class Home extends View {
 
@@ -37,7 +38,7 @@ export default class Home extends View {
         filteredData.forEach(photographer => {
             const p = photographerTemplate.content.cloneNode(true);
             p.querySelector('.photographer-name').textContent = photographer.name;
-            p.querySelector('.photographer-portrait').src = '/media/' + photographer.portrait;
+            p.querySelector('.photographer-portrait').src = generateThumbnailFilename('/media/' + photographer.portrait);
             p.querySelector('.photographer-city').textContent = photographer.city;
             p.querySelector('.photographer-tagline').textContent = photographer.tagline;
             p.querySelector('.photographer-price').textContent = photographer.price;

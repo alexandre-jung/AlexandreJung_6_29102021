@@ -1,3 +1,5 @@
+import { generateThumbnailFilename } from "../utils.mjs";
+
 export function tagFactory(tabFocusable = false) {
     const tagTemplate = document.createElement('a');
     tagTemplate.classList.add('btn', 'btn-tag');
@@ -36,14 +38,16 @@ export function videoFactory() {
     }
 }
 
-export function mediaFactory(base = '/media/') {
+export function mediaFactory(base = '/media/', useThumbnail = false) {
     const createImage = imageFactory();
     const createVideo = videoFactory();
     return function (source, title) {
         if (source) {
             let mediaElement = null;
+            console.log(source)
             if (source.endsWith('.jpg')) {
-                mediaElement = createImage(`${base}${source}`);
+                const file = useThumbnail ? generateThumbnailFilename(source) : source;
+                mediaElement = createImage(`${base}${file}`);
             } else if (source.endsWith('.mp4')) {
                 mediaElement = createVideo(`${base}${source}`);
             } else {

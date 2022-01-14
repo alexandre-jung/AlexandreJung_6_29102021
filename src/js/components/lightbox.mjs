@@ -1,5 +1,5 @@
 import { mediaFactory } from "../factories/ui.mjs";
-import { rotateIndex } from "../utils.mjs";
+import { generateFilename, rotateIndex } from "../utils.mjs";
 
 export default class Lightbox {
     constructor() {
@@ -53,7 +53,7 @@ export default class Lightbox {
             return titleElement;
         }
 
-        const mediaElement = this.mediaFactory(currentMediaSource);
+        const mediaElement = this.mediaFactory(generateFilename(currentMediaSource));
         if (mediaElement instanceof HTMLVideoElement) {
             mediaElement.setAttribute('controls', true);
         }

@@ -1,7 +1,7 @@
 import View from "./View.mjs";
 import { tagFactory } from "../factories/ui.mjs";
 import { mediaFactory } from "../factories/ui.mjs";
-import { getTemplateElement } from "../utils.mjs";
+import { generateThumbnailFilename, getTemplateElement } from "../utils.mjs";
 import { setupDropdown } from "../components/dropdown.mjs";
 import Lightbox from "../components/lightbox.mjs";
 import { showModal } from '../components/modal.mjs';
@@ -47,7 +47,7 @@ export default class Photographer extends View {
         photographerCity.textContent = photographer.city;
         photographerCountry.textContent = photographer.country;
         photographerTagline.textContent = photographer.tagline;
-        photographerProfilePhoto.setAttribute('src', `/media/${photographer.portrait}`);
+        photographerProfilePhoto.setAttribute('src', generateThumbnailFilename(`/media/${photographer.portrait}`));
 
         if (photographerTags) {
             const createTag = tagFactory();
@@ -57,7 +57,7 @@ export default class Photographer extends View {
         }
 
         function mediaCardFactory() {
-            const createMedia = mediaFactory();
+            const createMedia = mediaFactory('/media/', true);
             const mediaTemplate = getTemplateElement('media-card');
             return function (src, title, likes, mediaId, disabled) {
                 const mediaCard = mediaTemplate.cloneNode(true);

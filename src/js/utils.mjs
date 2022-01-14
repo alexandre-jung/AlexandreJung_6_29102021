@@ -15,3 +15,17 @@ export function rotateIndex(idx, max) {
     }
     return idx;
 }
+
+export function generateThumbnailFilename(file) {
+    if (file.endsWith('.jpg')) {
+        return file.slice(0, -4) + '.thumbnail.webp';
+    }
+    return file;
+}
+
+export function generateFilename(file) {
+    if (file.endsWith('.thumbnail.webp')) {
+        return file.slice(0, -15) + '.jpg';
+    }
+    return file;
+}
