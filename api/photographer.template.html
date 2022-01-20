@@ -1,0 +1,156 @@
+<div class="hero">
+    <header>
+        <h1 class="fs-64 text-secondary" id="photographer-name-title"></h1>
+        <div class="location fs-24 text-primary mt-1">
+            <span class="city"></span>,
+            <span class="country"></span>
+        </div>
+        <p class="tagline text-midgray fs-18 mt-2"></p>
+        <div class="tag-list"></div>
+    </header>
+
+    <button class="btn btn-primary contact">Contactez-moi</button>
+
+    <div class="profile-photo">
+        <div class="ratio-box square">
+            <img class="profile-image rounded">
+        </div>
+    </div>
+</div>
+
+<div id="orderby">
+    <strong class="orderby-label">Trier par</strong>
+    <div
+        class="dropdown"
+        data-expanded="false"
+        data-value="popularity"
+    >
+        <button
+            class="dropdown-toggle"
+            aria-haspopup="listbox"
+            aria-expanded="false"
+        >
+            <span
+                class="sr-only"
+                id="label-choice"
+            >
+                Trier par
+            </span>
+            <span
+                class="dropdown-value"
+                id="dropdown-value"
+            >
+            </span>
+        </button>
+        <div
+            class="dropdown-list list-unstyled"
+            role="listbox"
+            aria-expanded="true"
+            aria-activedescendant="popularity"
+            tabindex="-1"
+        >
+            <div
+                class="dropdown-item"
+                id="popularity"
+                data-value="popularity"
+                data-selected="false"
+                data-active="false"
+                role="option"
+                aria-selected="true"
+                tabindex="-1"
+            >
+                Popularité
+            </div>
+            <div
+                class="dropdown-item"
+                id="dateReverse"
+                data-value="dateReverse"
+                data-selected="false"
+                data-active="false"
+                role="option"
+                aria-selected="false"
+                tabindex="-1"
+            >
+                Les plus récentes
+            </div>
+            <div
+                class="dropdown-item"
+                id="date"
+                data-value="date"
+                data-selected="false"
+                data-active="false"
+                role="option"
+                aria-selected="false"
+                tabindex="-1"
+            >
+                Les plus anciennes
+            </div>
+            <div
+                class="dropdown-item"
+                id="title"
+                data-value="title"
+                data-selected="false"
+                data-active="false"
+                role="option"
+                aria-selected="false"
+                tabindex="-1"
+            >
+                Titre
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="media-root"></div>
+<div id="insert"></div>
+
+<div class="insert fs-24">
+    <span class="insert-likes nowrap mx-2">
+        <span id="insert-likes-value"></span>
+        <svg aria-hidden="true" viewbox="0 0 20 19" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M10 18.35L8.55 17.03C3.4 12.36 0 9.28 0 5.5C0 2.42 2.42 0 5.5 0C7.24 0 8.91 0.81 10 2.09C11.09 0.81 12.76 0 14.5 0C17.58 0 20 2.42 20 5.5C20 9.28 16.6 12.36 11.45 17.04L10 18.35Z" />
+        </svg>
+    </span>
+    <span class="nowrap mx-2">
+        <span id="insert-daily-charge"></span>€ /jour
+    </span>
+</div>
+
+<template id="media-card-template">
+    <div
+        class="card-photo"
+        x:data-popularity="nbLikes"
+        x:data-date="date"
+        x:data-date-reverse="dateReverse"
+        x:data-title="title"
+        x:title="tooltip"
+    >
+        <div
+            x:handle="mediaPlaceholder"
+            class="ratio-box auto media-placeholder"
+        ></div>
+        <div class="card-photo-description">
+            <p
+                x:text="title"
+                class="card-photo-title photo-title"
+            ></p>
+            <button
+                x:handle="likeButton"
+                x:aria-label="likeAriaLabel"
+                class="btn btn-like"
+            >
+                <span
+                    x:text="nbLikes"
+                    x:data-value="nbLikes"
+                    x:data-media-id="mediaId"
+                    class="total-likes"
+                ></span>
+                <svg aria-hidden="true" viewbox="0 0 20 19" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M10 18.35L8.55 17.03C3.4 12.36 0 9.28 0 5.5C0 2.42 2.42 0 5.5 0C7.24 0 8.91 0.81 10 2.09C11.09 0.81 12.76 0 14.5 0C17.58 0 20 2.42 20 5.5C20 9.28 16.6 12.36 11.45 17.04L10 18.35Z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+</template>
