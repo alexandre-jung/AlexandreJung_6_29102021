@@ -9,6 +9,7 @@ export function tagFactory(tabFocusable = false) {
         const tag = tagTemplate.cloneNode();
         tag.href = `${import.meta.env.BASE_URL}home?filter_by=` + tagLabel;
         tag.textContent = `#${tagLabel}`;
+        tag.setAttribute('aria-label', tagLabel);
         if (active) {
             tag.classList.add('active');
         }
@@ -50,6 +51,7 @@ export function mediaFactory(base = `${import.meta.env.BASE_URL}/media/`, useThu
                 mediaElement.alt = title;
             } else if (source.endsWith('.mp4')) {
                 mediaElement = createVideo(`${base}${source}`);
+                mediaElement.setAttribute('aria-label', title);
             } else {
                 console.error('unknown media format');
                 return;

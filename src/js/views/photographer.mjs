@@ -61,20 +61,33 @@ export default class Photographer extends View {
             const createMedia = mediaFactory(`${import.meta.env.BASE_URL}media/`, true);
             const mediaTemplate = getTemplateElement('media-card');
             return function (src, title, likes, mediaId, disabled) {
-                console.log('base URL:', import.meta.env.BASE_URL);
                 const mediaCard = mediaTemplate.cloneNode(true);
                 const mediaPlaceholder = mediaCard.querySelector('.media-placeholder');
                 const mediaFragment = createMedia(src, title);
-                const likesElement = mediaCard.querySelector('.total-likes')
+                const likesElement = mediaCard.querySelector('.total-likes');
+                const likeButton = likesElement.closest('.btn.btn-like');
                 likesElement.textContent = likes;
                 likesElement.dataset.value = likes;
                 likesElement.dataset.mediaId = mediaId;
+                likeButton.setAttribute('aria-label', `${likes} likes`);
+
                 if (disabled) {
-                    let likeButton = likesElement.closest('.btn.btn-like');
                     likeButton.disabled = true;
                 }
                 mediaCard.querySelector('.photo-title').textContent = title;
                 mediaPlaceholder.append(mediaFragment);
+
+                // Refocus media when liking it
+                likeButton.addEventListener('click', function refocusMedia() {
+                    likeButton
+                        .parentElement
+                        .parentElement
+                        .firstElementChild
+                        .firstElementChild
+                        .focus();
+                    likeButton.removeEventListener('click', refocusMedia);
+                });
+
                 return mediaCard;
             }
         }

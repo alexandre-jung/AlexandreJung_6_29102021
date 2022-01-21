@@ -49,6 +49,11 @@ export default class Home extends View {
             imageLink.href = `${import.meta.env.BASE_URL}photographer/` + photographer.id;
             imageLink.addEventListener('focus', () => imageLink.scrollIntoView({ block: 'center', behavior: 'smooth' }));
 
+            const photographerDescriptionId = `photographer-description-${photographer.id}`;
+            const photographerDescription = p.querySelector('.card-photographer-description');
+            photographerDescription.id = photographerDescriptionId;
+            imageLink.setAttribute('aria-label', photographer.name);
+
             const tags = p.querySelector('.tag-list');
             if (tags) {
                 const createTag = tagFactory();
