@@ -43,15 +43,13 @@
 
 <body tabindex="-1">
 
-    <!-- Keyboard navigation links -->
-    <ul class="list-unstyled">
-        <li>
-            <a href="#root" class="btn btn-primary top-link sr-only sr-only-focusable">
-                Passer au contenu
-            </a>
-            <div id="white-overlay"></div>
-        </li>
-    </ul>
+    <!-- Keyboard direct access links -->
+    <div>
+        <a href="#root" class="btn btn-primary top-link sr-only sr-only-focusable">
+            Passer au contenu
+        </a>
+        <div id="white-overlay"></div>
+    </div>
 
     <div class="container">
 
@@ -60,7 +58,7 @@
 
             <!-- Site logo -->
             <div id="site-logo">
-                <a href="/" rel="tag" id='home-link'>
+                <a href="/" rel="tag" id='home-link' aria-label="Retourner à l'accueil">
                     <img src="/assets/logo.svg" width="200" height="50" alt="Fisheye" data-navlink>
                 </a>
             </div>
