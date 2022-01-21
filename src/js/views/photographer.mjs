@@ -47,7 +47,7 @@ export default class Photographer extends View {
         photographerCity.textContent = photographer.city;
         photographerCountry.textContent = photographer.country;
         photographerTagline.textContent = photographer.tagline;
-        photographerProfilePhoto.setAttribute('src', generateThumbnailFilename(`/media/${photographer.portrait}`));
+        photographerProfilePhoto.setAttribute('src', generateThumbnailFilename(`${import.meta.env.BASE_URL}media/${photographer.portrait}`));
         photographerProfilePhoto.alt = photographer.name;
 
         if (photographerTags) {
@@ -58,9 +58,10 @@ export default class Photographer extends View {
         }
 
         function mediaCardFactory() {
-            const createMedia = mediaFactory('/media/', true);
+            const createMedia = mediaFactory(`${import.meta.env.BASE_URL}media/`, true);
             const mediaTemplate = getTemplateElement('media-card');
             return function (src, title, likes, mediaId, disabled) {
+                console.log('base URL:', import.meta.env.BASE_URL);
                 const mediaCard = mediaTemplate.cloneNode(true);
                 const mediaPlaceholder = mediaCard.querySelector('.media-placeholder');
                 const mediaFragment = createMedia(src, title);

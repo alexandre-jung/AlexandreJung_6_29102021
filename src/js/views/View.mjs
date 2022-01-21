@@ -11,7 +11,7 @@ export default class View {
         }
 
         this.viewName = view;
-        this.templateURL = `/api/${view}.template.html`;
+        this.templateURL = `${import.meta.env.BASE_URL}api/${view}.template.html`;
         this.viewRoot = document.querySelector('#root');
         this.templateDataFetcher = new DataFetcher(this.templateURL);
         this.templateElement = null;

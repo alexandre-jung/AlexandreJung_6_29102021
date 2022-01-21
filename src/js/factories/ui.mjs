@@ -7,7 +7,7 @@ export function tagFactory(tabFocusable = false) {
     tagTemplate.rel = 'tag';
     return function (tagLabel, active = false) {
         const tag = tagTemplate.cloneNode();
-        tag.href = '/home?filter_by=' + tagLabel;
+        tag.href = `${import.meta.env.BASE_URL}home?filter_by=` + tagLabel;
         tag.textContent = `#${tagLabel}`;
         if (active) {
             tag.classList.add('active');
@@ -38,7 +38,7 @@ export function videoFactory() {
     }
 }
 
-export function mediaFactory(base = '/media/', useThumbnail = false) {
+export function mediaFactory(base = `${import.meta.env.BASE_URL}/media/`, useThumbnail = false) {
     const createImage = imageFactory();
     const createVideo = videoFactory();
     return function (source, title) {

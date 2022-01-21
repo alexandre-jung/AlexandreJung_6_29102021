@@ -5,7 +5,7 @@ import Router from './router.mjs';
 import routes from './routes.mjs';
 
 function main() {
-    const contentDataFetcher = new DataFetcher('/api/data.json');
+    const contentDataFetcher = new DataFetcher(`${import.meta.env.BASE_URL}api/data.json`);
 
     // create the router and its paths
     const router = new Router(contentDataFetcher);
@@ -39,6 +39,9 @@ function main() {
     });
     // run router on page load
     runRouter(location);
+
+    const homeLink = document.querySelector('#home-link');
+    if (homeLink) homeLink.href = import.meta.env.BASE_URL;
 }
 
 document.addEventListener('DOMContentLoaded', main);
