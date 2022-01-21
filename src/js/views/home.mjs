@@ -38,10 +38,10 @@ export default class Home extends View {
         filteredData.forEach(photographer => {
             const p = photographerTemplate.content.cloneNode(true);
             const photographerPortrait = p.querySelector('.photographer-portrait');
-            photographerPortrait.src = '/media/' + photographer.portrait;
+            photographerPortrait.src = `${import.meta.env.BASE_URL}media/` + photographer.portrait;
             photographerPortrait.alt = photographer.name;
             p.querySelector('.photographer-name').textContent = photographer.name;
-            p.querySelector('.photographer-portrait').src = generateThumbnailFilename('/media/' + photographer.portrait);
+            p.querySelector('.photographer-portrait').src = generateThumbnailFilename(`${import.meta.env.BASE_URL}media/` + photographer.portrait);
             p.querySelector('.photographer-city').textContent = photographer.city;
             p.querySelector('.photographer-tagline').textContent = photographer.tagline;
             p.querySelector('.photographer-price').textContent = photographer.price;
