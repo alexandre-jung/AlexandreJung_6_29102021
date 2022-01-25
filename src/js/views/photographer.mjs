@@ -1,20 +1,26 @@
 import View from "./View.mjs";
-import { tagFactory } from "../factories/ui.mjs";
-import { mediaFactory } from "../factories/ui.mjs";
-import { generateThumbnailFilename, getTemplateElement } from "../utils.mjs";
+import { mediaCardFactory } from "../factories/ui.mjs";
 import { setupDropdown } from "../components/dropdown.mjs";
 import Lightbox from "../components/lightbox.mjs";
 import { showModal } from '../components/modal.mjs';
 import NotFoundError from "../exceptions/NotFound.mjs";
+import {
+    generateThumbnailFilename,
+    getTemplateElement
+} from "../utils.mjs";
 
 export default class Photographer extends View {
 
     constructor() {
         super('photographer');
-        this.lightbox = new Lightbox();
+        this.lightbox = null;
     }
 
     render = ({ id }, contentData) => {
+        if (!this.lightbox) {
+            this.lightbox = new Lightbox();
+        }
+
         // Get data for the current photographer
         const photographerIdx = contentData.photographers.findIndex(function (photographer) {
             return photographer.id == id;
@@ -50,47 +56,8 @@ export default class Photographer extends View {
         photographerProfilePhoto.setAttribute('src', generateThumbnailFilename(`${import.meta.env.BASE_URL}media/${photographer.portrait}`));
         photographerProfilePhoto.alt = photographer.name;
 
-        if (photographerTags) {
-            const createTag = tagFactory();
-            photographer.tags.forEach(tagLabel => {
-                photographerTags.append(createTag(tagLabel));
-            });
-        }
-
-        function mediaCardFactory() {
-            const createMedia = mediaFactory(`${import.meta.env.BASE_URL}media/`, true);
-            const mediaTemplate = getTemplateElement('media-card');
-            return function (src, title, likes, mediaId, disabled) {
-                const mediaCard = mediaTemplate.cloneNode(true);
-                const mediaPlaceholder = mediaCard.querySelector('.media-placeholder');
-                const mediaFragment = createMedia(src, title);
-                const likesElement = mediaCard.querySelector('.total-likes');
-                const likeButton = likesElement.closest('.btn.btn-like');
-                likesElement.textContent = likes;
-                likesElement.dataset.value = likes;
-                likesElement.dataset.mediaId = mediaId;
-                likeButton.setAttribute('aria-label', `${likes} likes`);
-
-                if (disabled) {
-                    likeButton.disabled = true;
-                }
-                mediaCard.querySelector('.photo-title').textContent = title;
-                mediaPlaceholder.append(mediaFragment);
-
-                // Refocus media when liking it
-                likeButton.addEventListener('click', function refocusMedia() {
-                    likeButton
-                        .parentElement
-                        .parentElement
-                        .firstElementChild
-                        .firstElementChild
-                        .focus();
-                    likeButton.removeEventListener('click', refocusMedia);
-                });
-
-                return mediaCard;
-            }
-        }
+        Photographer.renderTags(photographerTags, photographer.tags);
+        document.querySelector('#tag-template')?.remove();
 
         const currentPhotographerMedia = contentData.media.filter(function (media) {
             return media.photographerId == photographer.id;

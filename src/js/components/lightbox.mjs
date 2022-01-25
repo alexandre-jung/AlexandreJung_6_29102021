@@ -62,10 +62,8 @@ export default class Lightbox {
         const mediaElement = this.mediaFactory(
             generateFilename(currentMediaSource),
             currentMediaTitle,
+            true
         );
-        if (mediaElement instanceof HTMLVideoElement) {
-            mediaElement.setAttribute('controls', true);
-        }
         this.placeholder.textContent = '';
         this.placeholder.append(mediaElement);
         this.placeholder.append(getTitleElement());
@@ -106,7 +104,6 @@ export default class Lightbox {
     previous = () => {
         this.update(this.previousBtn.dataset.ref);
         this.previousFocus = document.querySelector(`[src="${this.currentMediaSource}"]`);
-        console.log(this.currentMediaSource);
     }
     next = () => {
         this.update(this.nextBtn.dataset.ref);
