@@ -1,7 +1,7 @@
 import View from "./View.mjs";
 import { getAllTags } from "../api.mjs";
-import { tagFactory } from "../factories/ui.mjs";
 import { generateThumbnailFilename } from "../utils.mjs";
+import Template from "../template.mjs";
 
 export default class Home extends View {
 
@@ -22,57 +22,21 @@ export default class Home extends View {
 
         const filterBy = (new URLSearchParams(location.search)).get('filter_by');
 
-        let filteredData = contentData.photographers;
+        let photographersFilteredData = contentData.photographers;
         if (filterBy) {
-            filteredData = filteredData.filter(photographer => {
-                if (photographer.tags.includes(filterBy)) {
-                    return true;
-                }
-            });
+            photographersFilteredData = photographersFilteredData.filter(photographer =>
+                photographer.tags.includes(filterBy)
+            );
         }
 
-        const photographerTemplate = this.templateElement.querySelector('#photographer-template');
-        const photographers = document.querySelector('#photographers');
-
-        // Display every filtered photographer.
-        filteredData.forEach(photographer => {
-            const p = photographerTemplate.content.cloneNode(true);
-            const photographerPortrait = p.querySelector('.photographer-portrait');
-            photographerPortrait.src = `${import.meta.env.BASE_URL}media/` + photographer.portrait;
-            photographerPortrait.alt = photographer.name;
-            p.querySelector('.photographer-name').textContent = photographer.name;
-            p.querySelector('.photographer-portrait').src = generateThumbnailFilename(`${import.meta.env.BASE_URL}media/` + photographer.portrait);
-            p.querySelector('.photographer-city').textContent = photographer.city;
-            p.querySelector('.photographer-tagline').textContent = photographer.tagline;
-            p.querySelector('.photographer-price').textContent = photographer.price;
-            const imageLink = p.querySelector('.image-link');
-            imageLink.href = `${import.meta.env.BASE_URL}photographer/` + photographer.id;
-            imageLink.addEventListener('focus', () => imageLink.scrollIntoView({ block: 'center', behavior: 'smooth' }));
-
-            const photographerDescriptionId = `photographer-description-${photographer.id}`;
-            const photographerDescription = p.querySelector('.card-photographer-description');
-            photographerDescription.id = photographerDescriptionId;
-            imageLink.setAttribute('aria-label', photographer.name);
-
-            const tags = p.querySelector('.tag-list');
-            if (tags) {
-                const createTag = tagFactory();
-                photographer.tags.forEach(tagLabel => {
-                    tags.append(createTag(tagLabel));
-                });
-            }
-
-            photographers.append(p);
-        });
-
-        const tags = document.querySelector('#tags');
-        if (tags) {
-            tags.textContent = '';
-            const createTag = tagFactory(true);
-            getAllTags(contentData).forEach(tagLabel => {
-                tags.append(createTag(tagLabel, tagLabel == filterBy));
-            });
-        }
+        Home.renderTags(
+            document.querySelector("#tags"),
+            getAllTags(contentData),
+            filterBy,
+            true
+        );
+        Home.renderPhotographers(photographersFilteredData);
+        document.querySelector('#tag-template')?.remove();
 
         if(location.hash == '#root') {
             setTimeout(() =>
@@ -87,5 +51,40 @@ export default class Home extends View {
                 document.body.focus();
             }
         }
+    }
+
+    static renderPhotographers(photographers) {
+        // Get template element and placeholder for photographers.
+        const photographerTemplate = document.querySelector('#photographer-template');
+        const placeholder = document.querySelector('#photographers');
+
+        const template = new Template(photographerTemplate.content);
+
+        // Display every filtered photographer.
+        photographers.forEach(photographer => {
+
+            // Render a new DOM element that we can insert,
+            // and get useful handles on elements inside it.
+            const [newElement, { link, tagList }] = template.render({
+                ...photographer,
+                href: `${import.meta.env.BASE_URL}photographer/` + photographer.id,
+                thumbnail: generateThumbnailFilename(`${import.meta.env.BASE_URL}media/` + photographer.portrait),
+                descriptionId: `photographer-description-${photographer.id}`,
+            });
+
+            // Keep the focusable element centered if possible.
+            link.addEventListener('focus', () =>
+                link.scrollIntoView({ block: 'center', behavior: 'smooth' })
+            );
+
+            // Add photographer's tags.
+            Home.renderTags(tagList, photographer.tags);
+
+            // Add photographer
+            placeholder.append(newElement);
+        });
+        // Get rid of the template element (mainly for W3C validation).
+        // It is created again on page rendering anyway.
+        photographerTemplate.remove();
     }
 }

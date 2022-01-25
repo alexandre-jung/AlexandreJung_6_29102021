@@ -2,20 +2,51 @@
 
 <template id="photographer-template">
     <div class="card-photographer fw-bold">
-        <a class="image-link" rel="tag" tabindex="0">
+        <a
+            x:href="href"
+            x:handle="link"
+            x:aria-label="name"
+            class="image-link"
+            rel="tag"
+            tabindex="0"
+        >
             <div class="img-wrapper">
                 <div class="ratio-box square rounded">
-                    <img class="rounded photographer-portrait" data-navlink alt="">
+                    <img
+                        x:src="thumbnail"
+                        x:alt="name"
+                        class="rounded photographer-portrait"
+                        data-navlink
+                    >
                 </div>
             </div>
-            <h2 class="text-secondary fs-36 fw-normal photographer-name" data-navlink></h2>
+            <h2
+                x:text="name"
+                class="text-secondary fs-36 fw-normal photographer-name"
+            ></h2>
         </a>
-        <p class="card-photographer-description">
-            <span class="location text-primary fs-13 photographer-city"></span><br>
-            <span class="presentation fs-10 photographer-tagline"></span><br>
-            <span class="fs-9 fw-normal text-midgray"><span class="photographer-price"></span>€/jour</span>
+        <p
+            x:id="descriptionId"
+            class="card-photographer-description"
+        >
+            <span
+                x:text="city"
+                class="location text-primary fs-13 photographer-city"
+            ></span><br>
+            <span
+                x:text="tagline"
+                class="presentation fs-10 photographer-tagline"
+            ></span><br>
+            <span class="fs-9 fw-normal text-midgray">
+                <span
+                    x:text="price"
+                    class="photographer-price"
+                ></span>€/jour</span>
         </p>
-        <div class="tag-list">
+        <div
+            x:handle="tagList"
+            class="tag-list"
+        >
         </div>
     </div>
 </template>
