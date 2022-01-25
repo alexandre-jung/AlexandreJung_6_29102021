@@ -12,6 +12,7 @@ export function showModal(onHide) {
         window.removeEventListener('popstate', hideModal);
         modal.removeEventListener('keydown', trapFocusWithin);
         if (onHide) onHide();
+        initForm(form);
     }
 
     function onSubmit(ev) {
@@ -61,6 +62,12 @@ export function showModal(onHide) {
     window.addEventListener('popstate', hideModal);
 }
 
+function initForm(form) {
+    const formInputs = Array.from(form.elements);
+    const formFields = formInputs.filter(isFormField);
+    formFields.forEach(clearFormField);
+}
+
 function handleSubmit(form) {
     const formInputs = Array.from(form.elements);
     const formFields = formInputs.filter(isFormField);
@@ -76,21 +83,29 @@ function handleSubmit(form) {
     formFields.forEach(function(field) {
         if (!fieldIsValid(field)) {
             field.dataset.invalid = true;
-            field.nextElementSibling.style.visibility = 'visible';
+            const errorMessage = field.nextElementSibling;
+            errorMessage.style.visibility = 'visible';
+            errorMessage.setAttribute('aria-invalid', true);
         } else {
             field.dataset.invalid = false;
-            field.nextElementSibling.style.visibility = 'hidden';
+            const errorMessage = field.nextElementSibling;
+            errorMessage.style.visibility = 'hidden';
+            errorMessage.setAttribute('aria-invalid', false);
         }
     });
     return false;
 }
 
 function isFormField(field) {
-    return field.dataset.output != 'false';
+    return field.getAttribute('type') != 'submit';
 }
 
 function clearFormField(field) {
     field.value = '';
+    field.dataset.invalid = false;
+    const errorMessage = field.nextElementSibling;
+    errorMessage.style.visibility = 'hidden';
+    errorMessage.setAttribute('aria-invalid', false);
 }
 
 function outputField(field) {

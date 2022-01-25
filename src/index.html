@@ -81,13 +81,13 @@
     </div>
 
     <div class="lightbox" tabindex="-1">
-            <button class="lightbox-btn btn-close">
+            <button class="lightbox-btn btn-close" aria-label="Réduire l'image">
                 <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M42 4.23L37.77 0L21 16.77L4.23 0L0 4.23L16.77 21L0 37.77L4.23 42L21 25.23L37.77 42L42 37.77L25.23 21L42 4.23Z" fill="#911C1C"/>
                 </svg>
             </button>
         <div class="commands-left">
-            <button class="lightbox-btn btn-previous">
+            <button class="lightbox-btn btn-previous" aria-label="Image précédente">
                 <svg width="30" height="48" viewBox="0 0 30 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M29.6399 42.36L11.3199 24L29.6399 5.64L23.9999 -2.46532e-07L-0.000107861 24L23.9999 48L29.6399 42.36Z" fill="#911C1C"/>
                 </svg>
@@ -96,7 +96,7 @@
         <div class="lightbox-placeholder">
         </div>
         <div class="commands-right">
-            <button class="lightbox-btn btn-next">
+            <button class="lightbox-btn btn-next" aria-label="Image suivante">
                 <svg width="30" height="48" viewBox="0 0 30 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M0.360108 5.64L18.6801 24L0.360107 42.36L6.00011 48L30.0001 24L6.00011 3.88195e-06L0.360108 5.64Z" fill="#911C1C"/>
                 </svg>
@@ -109,7 +109,7 @@
             <header class="fs-48 fw-bold">
                 <h2 class="rfs-1 fw-normal">
                     Contactez-moi<br>
-                    <span id="photographer-name">Mimi Keel</span>
+                    <span id="contact-photographer-name">Mimi Keel</span>
                 </h2>
                 <span class="btn modal-close">X</span>
             </header>
@@ -125,7 +125,10 @@
                     name="first-name"
                     id="first-name"
                     data-label="Prénom"
+                    placeholder="John"
+                    aria-required="true"
                 >
+                <!-- We should add the `required` attribute, but we want to see the javascript validation for now -->
                 <div class="field-error">Ce champ est requis et doit contenir seulement des lettres et des tirets.</div>
             </div>
             <div class="input-group">
@@ -140,13 +143,16 @@
                     name="last-name"
                     id="last-name"
                     data-label="Nom"
+                    placeholder="Smith"
+                    aria-required="true"
                 >
+                <!-- We should add the `required` attribute, but we want to see the javascript validation for now -->
                 <div class="field-error">Ce champ est requis et doit contenir seulement des lettres et des tirets.</div>
             </div>
             <div class="input-group">
                 <label
-                for="email"
-                class="fs-24"
+                    for="email"
+                    class="fs-24"
                 >
                     Email
                 </label>
@@ -155,13 +161,16 @@
                     name="email"
                     id="email"
                     data-label="Email"
+                    placeholder="john.smith@google.com"
+                    aria-required="true"
                 >
+                <!-- We should add the `required` attribute, but we want to see the javascript validation for now -->
                 <div class="field-error">Ce champ doit être une adresse email valide.</div>
             </div>
             <div class="input-group">
                 <label
-                for="message"
-                class="fs-24"
+                    for="message"
+                    class="fs-24"
                 >
                     Votre message
                 </label>
@@ -169,7 +178,10 @@
                     name="message"
                     id="message"
                     data-label="Message"
+                    placeholder="De quoi avez-vous besoin ?"
+                    aria-required="true"
                 ></textarea>
+                <!-- We should add the `required` attribute, but we want to see the javascript validation for now -->
                 <div class="field-error">Vous devez entrer un message.</div>
             </div>
             <div class="input-group">

@@ -228,7 +228,7 @@ export default class Photographer extends View {
 
         // Setup contact modal
         const contactBtn = document.querySelector('.contact');
-        const modalPhotographerName = document.querySelector('#photographer-name');
+        const modalPhotographerName = document.querySelector('#contact-photographer-name');
         function handleModalHide() {
             contactBtn.focus();
         }
