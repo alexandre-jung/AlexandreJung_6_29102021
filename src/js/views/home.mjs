@@ -72,10 +72,23 @@ export default class Home extends View {
                 descriptionId: `photographer-description-${photographer.id}`,
             });
 
-            // Keep the focusable element centered if possible.
-            link.addEventListener('focus', () =>
-                link.scrollIntoView({ block: 'center', behavior: 'smooth' })
+            link.addEventListener('mousedown', () =>
+                link.dataset.clicked = true
             );
+
+            // Keep the focusable element centered if possible.
+            link.addEventListener('focus', () => {
+                if (link.dataset.clicked == 'true') {
+                    link.dataset.clicked = false;
+                    return;
+                }
+                link.classList.add('focused');
+                link.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            });
+
+            link.addEventListener('blur', () => {
+                link.classList.remove('focused');
+            });
 
             // Add photographer's tags.
             Home.renderTags(tagList, photographer.tags);

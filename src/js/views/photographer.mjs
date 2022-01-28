@@ -118,7 +118,15 @@ export default class Photographer extends View {
 
             mediaContainer.append(mediaFragment);
 
+            mediaElement.querySelector('img, video').addEventListener('mousedown', ev =>
+                ev.target.dataset.clicked = true
+            );
+
             mediaElement.querySelector('img, video').addEventListener('focus', ({target}) => {
+                if (target.dataset.clicked == 'true') {
+                    target.dataset.clicked = false;
+                    return;
+                }
                 const placeholder = target.closest('.media-placeholder');
                 placeholder.classList.add('outline-primary');
                 target.addEventListener('blur', () => placeholder.classList.remove('outline-primary'));
