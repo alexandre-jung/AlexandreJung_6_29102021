@@ -55,7 +55,7 @@ export default class View {
             this.viewRoot.appendChild(this.templateElement);
             for (const template of Array.from(sharedTemplates.children)) {
                 document.body.append(template);
-            };
+            }
             window.scroll(0, 0);
 
             // Run the cleaning function
@@ -71,17 +71,22 @@ export default class View {
             } catch(error) {
                 // Error during render
                 if (error instanceof NotFoundError) {
-                    views.notFound.renderView(null, contentDataFetcher)
+                    views.notFound.renderView(null, contentDataFetcher);
                 } else {
                     displayError(error);
                 }
             }
+            
+            // Remove the templates
+            document.querySelector('#tag-template')?.remove();
+            document.querySelector('#img-template')?.remove();
+            document.querySelector('#video-template')?.remove();
+
         // Error while fetching data
         }).catch(displayError);
     }
 
     static renderTags(placeholder, tags, activeTag, tabFocusable = false) {
-        // TODO use Template
         if (placeholder) {
             placeholder.textContent = '';
             const createTag = tagFactory(tabFocusable);

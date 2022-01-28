@@ -57,7 +57,6 @@ export default class Photographer extends View {
         photographerProfilePhoto.alt = photographer.name;
 
         Photographer.renderTags(photographerTags, photographer.tags);
-        document.querySelector('#tag-template')?.remove();
 
         const currentPhotographerMedia = contentData.media.filter(function (media) {
             return media.photographerId == photographer.id;

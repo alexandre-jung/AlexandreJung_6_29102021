@@ -36,7 +36,6 @@ export default class Home extends View {
             true
         );
         Home.renderPhotographers(photographersFilteredData);
-        document.querySelector('#tag-template')?.remove();
 
         if(location.hash == '#root') {
             setTimeout(() =>
