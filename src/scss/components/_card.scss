@@ -85,7 +85,8 @@
         text-decoration: none;
         border-radius: 0.5rem;
         text-align: center;
-        &:focus {
+        outline: none !important;
+        &.focused {
             outline: 4px solid $color-primary !important;
         }
     }
