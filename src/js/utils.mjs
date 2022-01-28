@@ -29,3 +29,9 @@ export function generateFilename(file) {
     }
     return file;
 }
+
+export function wrapElement(element, nodeType) {
+    const wrapper = document.createElement(nodeType);
+    wrapper.append(element);
+    return wrapper;
+}

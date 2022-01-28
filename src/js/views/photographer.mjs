@@ -4,6 +4,7 @@ import { setupDropdown } from "../components/dropdown.mjs";
 import Lightbox from "../components/lightbox.mjs";
 import { showModal } from '../components/modal.mjs';
 import NotFoundError from "../exceptions/NotFound.mjs";
+import { tagFactory } from "../factories/ui.mjs";
 import {
     generateThumbnailFilename,
     getTemplateElement
@@ -223,6 +224,16 @@ export default class Photographer extends View {
 
         return function() {
             document.removeEventListener('click', handleLikeClick);
+        }
+    }
+
+    static renderTags(placeholder, tags, activeTag, tabFocusable = false) {
+        if (placeholder) {
+            placeholder.textContent = '';
+            const createTag = tagFactory(tabFocusable);
+            tags.forEach(tagLabel => {
+                placeholder.append(createTag(tagLabel, tagLabel == activeTag));
+            });
         }
     }
 }

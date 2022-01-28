@@ -1,7 +1,6 @@
 import DataFetcher from "../api.mjs";
 import NotFoundError from "../exceptions/NotFound.mjs";
 import views from "./index.mjs";
-import { tagFactory } from "../factories/ui.mjs";
 
 export default class View {
 
@@ -68,6 +67,9 @@ export default class View {
                 // Render the view
                 this.cleanUp = this.render(params ?? {}, applicationData);
                 window.scrollTo(0, 0);
+
+                // Remove the type attribute to avoid W3C validation warning
+                document.querySelector('style[type="text/css"]')?.removeAttribute('type');
             } catch(error) {
                 // Error during render
                 if (error instanceof NotFoundError) {
@@ -84,15 +86,5 @@ export default class View {
 
         // Error while fetching data
         }).catch(displayError);
-    }
-
-    static renderTags(placeholder, tags, activeTag, tabFocusable = false) {
-        if (placeholder) {
-            placeholder.textContent = '';
-            const createTag = tagFactory(tabFocusable);
-            tags.forEach(tagLabel => {
-                placeholder.append(createTag(tagLabel, tagLabel == activeTag));
-            });
-        }
     }
 }

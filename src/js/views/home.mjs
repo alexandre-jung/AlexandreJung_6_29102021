@@ -1,7 +1,9 @@
 import View from "./View.mjs";
 import { getAllTags } from "../api.mjs";
-import { generateThumbnailFilename } from "../utils.mjs";
+import { generateThumbnailFilename, wrapElement } from "../utils.mjs";
 import Template from "../template.mjs";
+import { tagFactory } from "../factories/ui.mjs";
+import Photographer from "./photographer.mjs";
 
 export default class Home extends View {
 
@@ -90,7 +92,7 @@ export default class Home extends View {
             });
 
             // Add photographer's tags.
-            Home.renderTags(tagList, photographer.tags);
+            Photographer.renderTags(tagList, photographer.tags);
 
             // Add photographer
             placeholder.append(newElement);
@@ -98,5 +100,16 @@ export default class Home extends View {
         // Get rid of the template element (mainly for W3C validation).
         // It is created again on page rendering anyway.
         photographerTemplate.remove();
+    }
+
+    static renderTags(placeholder, tags, activeTag, tabFocusable = false) {
+        if (placeholder) {
+            placeholder.textContent = '';
+            const createTag = tagFactory(tabFocusable);
+            tags.forEach(tagLabel => {
+                const newTag = createTag(tagLabel, tagLabel == activeTag);
+                placeholder.append(wrapElement(newTag, 'li'));
+            });
+        }
     }
 }
