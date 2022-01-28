@@ -64,6 +64,12 @@ export default class View {
             }
 
             try {
+                // Do some initialization before rendering
+                const h1 = document.querySelector('#page-title');
+                h1.textContent = 'not empty';
+                h1.style.display = 'none';
+                h1.setAttribute('aria-hidden', true);
+
                 // Render the view
                 this.cleanUp = this.render(params ?? {}, applicationData);
                 window.scrollTo(0, 0);

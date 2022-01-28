@@ -30,12 +30,12 @@
             aria-haspopup="listbox"
             aria-expanded="false"
         >
-            <div
+            <span
                 class="sr-only"
                 id="label-choice"
             >
                 Trier par
-            </div>
+            </span>
             <span
                 class="dropdown-value"
                 id="dropdown-value"
@@ -49,7 +49,7 @@
             aria-activedescendant="popularity"
             tabindex="-1"
         >
-            <div href="#"
+            <div
                 class="dropdown-item"
                 id="popularity"
                 data-value="popularity"
@@ -62,7 +62,6 @@
                 Popularité
             </div>
             <div
-                href="#"
                 class="dropdown-item"
                 id="dateReverse"
                 data-value="dateReverse"
@@ -75,7 +74,6 @@
                 Les plus récentes
             </div>
             <div
-                href="#"
                 class="dropdown-item"
                 id="date"
                 data-value="date"
@@ -88,7 +86,6 @@
                 Les plus anciennes
             </div>
             <div
-                href="#"
                 class="dropdown-item"
                 id="title"
                 data-value="title"
@@ -107,13 +104,35 @@
 <div id="media-root"></div>
 <div id="insert"></div>
 
-<template t-name="media-card">
-    <div class="card-photo">
-        <div class="ratio-box auto media-placeholder" t-data="media"></div>
+<template id="media-card-template">
+    <div
+        class="card-photo"
+        x:data-popularity="nbLikes"
+        x:data-date="date"
+        x:data-date-reverse="dateReverse"
+        x:data-title="title"
+        x:title="tooltip"
+    >
+        <div
+            x:handle="mediaPlaceholder"
+            class="ratio-box auto media-placeholder"
+        ></div>
         <div class="card-photo-description">
-            <p class="card-photo-title photo-title" t-data="title"></p>
-            <button class="btn btn-like">
-                <span class="total-likes" t-data="likes" data-value="0" data-media-id=""></span>
+            <p
+                x:text="title"
+                class="card-photo-title photo-title"
+            ></p>
+            <button
+                x:handle="likeButton"
+                x:aria-label="likeAriaLabel"
+                class="btn btn-like"
+            >
+                <span
+                    x:text="nbLikes"
+                    x:data-value="nbLikes"
+                    x:data-media-id="mediaId"
+                    class="total-likes"
+                ></span>
                 <svg aria-hidden="true" viewbox="0 0 20 19" xmlns="http://www.w3.org/2000/svg">
                     <path
                         d="M10 18.35L8.55 17.03C3.4 12.36 0 9.28 0 5.5C0 2.42 2.42 0 5.5 0C7.24 0 8.91 0.81 10 2.09C11.09 0.81 12.76 0 14.5 0C17.58 0 20 2.42 20 5.5C20 9.28 16.6 12.36 11.45 17.04L10 18.35Z" />

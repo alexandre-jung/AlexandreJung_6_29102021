@@ -75,37 +75,35 @@ export function mediaFactory(base = `${import.meta.env.BASE_URL}/media/`, useThu
     }
 }
 
-export function mediaCardFactory() {
+export function mediaCardFactory(removeTemplateElement = false) {
     const createMedia = mediaFactory(`${import.meta.env.BASE_URL}media/`, true);
-    const mediaTemplate = getTemplateElement('media-card');
-    return function (src, title, likes, mediaId, disabled) {
-        const mediaCard = mediaTemplate.cloneNode(true);
-        const mediaPlaceholder = mediaCard.querySelector('.media-placeholder');
+    const templateElement = document.querySelector('#media-card-template');
+    const template = new Template(templateElement.content);
+
+    if (removeTemplateElement) {
+        templateElement.remove();
+    }
+
+    return (src, title, nbLikes, mediaId, date, disabled) => {
         const mediaFragment = createMedia(src, title);
-        const likesElement = mediaCard.querySelector('.total-likes');
-        const likeButton = likesElement.closest('.btn.btn-like');
-        likesElement.textContent = likes;
-        likesElement.dataset.value = likes;
-        likesElement.dataset.mediaId = mediaId;
-        likeButton.setAttribute('aria-label', `${likes} likes`);
-
-        if (disabled) {
-            likeButton.disabled = true;
-        }
-        mediaCard.querySelector('.photo-title').textContent = title;
+        const [rendered, { likeButton, mediaPlaceholder }] = template.render({
+            nbLikes,
+            mediaId,
+            title,
+            likeAriaLabel: `${nbLikes} likes`,
+            date: new Date(date),
+            dateReverse: new Date(date),
+            tooltip: `${title}\n${date}`,
+        });
+        likeButton.disabled = disabled;
         mediaPlaceholder.append(mediaFragment);
-
+        
         // Refocus media when liking it
         likeButton.addEventListener('click', function refocusMedia() {
-            likeButton
-                .parentElement
-                .parentElement
-                .firstElementChild
-                .firstElementChild
-                .focus();
+            mediaPlaceholder.firstElementChild.focus();
             likeButton.removeEventListener('click', refocusMedia);
         });
 
-        return mediaCard;
-    }
+        return rendered;
+    };
 }

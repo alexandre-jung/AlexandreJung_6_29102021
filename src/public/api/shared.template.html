@@ -24,12 +24,14 @@
 <template id="video-template">
     <video
         x:handle="video"
-        x:src="src"
         x:data-ref="src"
         x:data-title="title"
         x:aria-label="title"
         x:tabindex="tabindex"
-        type="video/mp4"
     >
+        <source
+            x:src="src"
+            type="video/mp4"
+        >
     </video>
 </template>

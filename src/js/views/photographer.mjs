@@ -32,9 +32,7 @@ export default class Photographer extends View {
         
         // Hide home header elements except the logo
         const tagNav = document.querySelector('nav');
-        const pageTitle = document.querySelector('#page-title');
         tagNav.style.display = 'none';
-        pageTitle.style.display = 'none';
 
         const photographer = contentData.photographers[photographerIdx];
 
@@ -96,32 +94,27 @@ export default class Photographer extends View {
         }
         document.addEventListener('click', handleLikeClick);
 
-        const createMediaCard = mediaCardFactory();
+        const createMediaCard = mediaCardFactory(true);
         const mediaRoot = document.querySelector('#media-root');
         const mediaContainer = document.createElement('div');
         mediaContainer.classList.add('grid');
+
         currentPhotographerMedia.forEach(function (media) {
             const mediaFragment = createMediaCard(
                 media.image ?? media.video,
                 media.title,
                 media.likes,
                 media.id,
+                media.date,
                 media.alreadyLiked,
             );
             const mediaElement = mediaFragment.querySelector('.card-photo');
-            // Set data on the card for ordering and lightbox
-            mediaElement.dataset.popularity = media.likes;
-            mediaElement.dataset.date = new Date(media.date);
-            mediaElement.dataset.dateReverse = new Date(media.date);
-            mediaElement.dataset.title = media.title;
-            mediaElement.title = `${media.title}\n${media.date}`;
-
             mediaContainer.append(mediaFragment);
 
+            // Prevent auto-scroll if clicked
             mediaElement.querySelector('img, video').addEventListener('mousedown', ev =>
                 ev.target.dataset.clicked = true
             );
-
             mediaElement.querySelector('img, video').addEventListener('focus', ({target}) => {
                 if (target.dataset.clicked == 'true') {
                     target.dataset.clicked = false;
@@ -133,8 +126,8 @@ export default class Photographer extends View {
                 target.scrollIntoView({ block: 'center', behavior: 'smooth' });
             });
         });
-        mediaRoot.append(mediaContainer);
 
+        mediaRoot.append(mediaContainer);
 
         const orderMedia = (orderBy = 'popularity') => {
             const photographerMedia = Array.from(mediaContainer.children);
@@ -162,7 +155,7 @@ export default class Photographer extends View {
             orderedPhotographerMedia.forEach(function (media) {
                 mediaContainer.insertBefore(media, mediaContainer.children[0]);
                 let mediaElement = media.querySelector('img, video');
-                const mediaSrc = mediaElement.getAttribute('src');
+                const mediaSrc = mediaElement.dataset.ref;
                 const mediaTitle = mediaElement.dataset.title;
                 mediaSources.unshift({ src: mediaSrc, title: mediaTitle });
             });
