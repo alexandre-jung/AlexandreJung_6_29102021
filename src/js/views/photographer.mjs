@@ -1,13 +1,10 @@
-import View from "./View.mjs";
-import { mediaCardFactory } from "../factories/ui.mjs";
-import { setupDropdown } from "../components/dropdown.mjs";
-import Lightbox from "../components/lightbox.mjs";
-import { showModal } from '../components/modal.mjs';
-import NotFoundError from "../exceptions/NotFound.mjs";
-import { tagFactory } from "../factories/ui.mjs";
-import { generateThumbnailFilename } from "../utils.mjs";
+import BaseView from "@/views/BaseView";
+import { mediaCardFactory, tagFactory } from "@/factories";
+import { Lightbox, setupDropdown, showModal } from "@/components";
+import NotFoundError from "@/exceptions/NotFound";
+import { generateThumbnailFilename } from "@/utils";
 
-export default class Photographer extends View {
+export default class Photographer extends BaseView {
 
     constructor() {
         super('photographer');

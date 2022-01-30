@@ -1,5 +1,5 @@
-import { Path } from "./router.mjs";
-import views from "./views/index.mjs";
+import { Path } from "@/router";
+import views from "@/views";
 
 const routes = [
     new Path(`^${import.meta.env.BASE_URL}photographer/(?<id>\\d+)/?$`, views.photographer),

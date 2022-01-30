@@ -1,5 +1,5 @@
-import { mediaFactory } from "../factories/ui.mjs";
-import { generateFilename, rotateIndex } from "../utils.mjs";
+import { mediaFactory } from "@/factories";
+import { generateFilename, rotateIndex } from "@/utils";
 
 export default class Lightbox {
     constructor() {

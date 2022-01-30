@@ -1,6 +1,6 @@
-import Home from './home.mjs';
-import Photographer from './photographer.mjs';
-import NotFound from './notFound.mjs';
+import Home from '@/views/home.mjs';
+import Photographer from '@/views/photographer.mjs';
+import NotFound from '@/views/notFound.mjs';
 
 const views = {
     home: new Home(),

@@ -1,8 +1,7 @@
 import '../scss/main.scss';
-import './components/dropdown.mjs';
-import DataFetcher from './api.mjs';
-import Router from './router.mjs';
-import routes from './routes.mjs';
+import DataFetcher from '@/api';
+import Router from '@/router';
+import routes from '@/routes';
 
 function main() {
     const contentDataFetcher = new DataFetcher(`${import.meta.env.BASE_URL}api/data.json`);

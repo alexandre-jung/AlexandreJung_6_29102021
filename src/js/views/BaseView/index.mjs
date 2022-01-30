@@ -1,8 +1,8 @@
-import DataFetcher from "../api.mjs";
-import NotFoundError from "../exceptions/NotFound.mjs";
-import views from "./index.mjs";
+import views from "@/views";
+import DataFetcher from "@/api";
+import NotFoundError from "@/exceptions/NotFound";
 
-export default class View {
+export default class BaseView {
 
     constructor(view) {
 

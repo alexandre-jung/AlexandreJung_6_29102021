@@ -1,5 +1,5 @@
-import Template from "../template.mjs";
-import { generateThumbnailFilename } from "../utils.mjs";
+import Template from "@/template";
+import { generateThumbnailFilename } from "@/utils";
 
 export function tagFactory(tabFocusable = false) {
     const templateElement = document.querySelector('#tag-template')?.content;

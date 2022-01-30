@@ -1,11 +1,11 @@
-import View from "./View.mjs";
-import { getAllTags } from "../api.mjs";
-import { generateThumbnailFilename, wrapElement } from "../utils.mjs";
-import Template from "../template.mjs";
-import { tagFactory } from "../factories/ui.mjs";
-import Photographer from "./photographer.mjs";
+import BaseView from "@/views/BaseView";
+import Photographer from "@/views/photographer.mjs";
+import { getAllTags } from "@/api";
+import { generateThumbnailFilename, wrapElement } from "@/utils";
+import Template from "@/template";
+import { tagFactory } from "@/factories";
 
-export default class Home extends View {
+export default class Home extends BaseView {
 
     constructor() {
         super('home');

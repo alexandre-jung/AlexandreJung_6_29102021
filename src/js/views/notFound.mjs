@@ -1,6 +1,6 @@
-import View from "./View.mjs";
+import BaseView from "@/views/BaseView";
 
-export default class NotFound extends View {
+export default class NotFound extends BaseView {
 
     constructor() {
         super('notFound');
