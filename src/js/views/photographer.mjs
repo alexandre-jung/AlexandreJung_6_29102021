@@ -5,10 +5,7 @@ import Lightbox from "../components/lightbox.mjs";
 import { showModal } from '../components/modal.mjs';
 import NotFoundError from "../exceptions/NotFound.mjs";
 import { tagFactory } from "../factories/ui.mjs";
-import {
-    generateThumbnailFilename,
-    getTemplateElement
-} from "../utils.mjs";
+import { generateThumbnailFilename } from "../utils.mjs";
 
 export default class Photographer extends View {
 
@@ -86,7 +83,7 @@ export default class Photographer extends View {
 
                             // Update insert likes data-popularity of the media element for further ordering
                             likeButton.closest('[data-popularity]').dataset.popularity++;
-                            document.querySelector('.insert-likes-value').textContent = ++photographerLikes;
+                            document.querySelector('#insert-likes-value').textContent = ++photographerLikes;
                         }
                     }
                 }
@@ -183,16 +180,8 @@ export default class Photographer extends View {
 
 
         // Setup the information insert
-        const insertTemplate = getTemplateElement('insert');
-        const insertPlaceholder = document.getElementById('insert');
-        insertPlaceholder.appendChild(insertTemplate.cloneNode(true));
-        const insertElement = insertPlaceholder.querySelector('.insert');
-        insertElement.querySelector('.insert-likes-value').textContent = photographerLikes;
-        insertElement.querySelector('.insert-daily-charge').textContent = photographer.price;
-        // Setup the heart icon
-        // FIXME It cannot be placed directly in the insert template
-        const heartTemplate = getTemplateElement('heart-icon');
-        insertElement.querySelector('.insert-likes').appendChild(heartTemplate.cloneNode(true))
+        document.querySelector('#insert-likes-value').textContent = photographerLikes;
+        document.querySelector('#insert-daily-charge').textContent = photographer.price;
 
         // Setup contact modal
         const contactBtn = document.querySelector('.contact');

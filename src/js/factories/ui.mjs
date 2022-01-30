@@ -1,13 +1,11 @@
 import Template from "../template.mjs";
-import {
-    generateThumbnailFilename,
-    getTemplateElement
-} from "../utils.mjs";
+import { generateThumbnailFilename } from "../utils.mjs";
 
 export function tagFactory(tabFocusable = false) {
-    const template = new Template(
-        document.querySelector('#tag-template').content
-    );
+    const templateElement = document.querySelector('#tag-template')?.content;
+    if (!templateElement) throw new Error('tag template not found in the document');
+    const template = new Template(templateElement);
+
     return (label, active = false) => {
         const [rendered, { tag }] = template.render({
             label: `#${label}`,
@@ -22,8 +20,9 @@ export function tagFactory(tabFocusable = false) {
 export function imageFactory() {
 
     const templateElement = document.querySelector('#img-template')?.content;
-    if (!templateElement) throw new Error('<img> template not found in the document');
+    if (!templateElement) throw new Error('img template not found in the document');
     const template = new Template(templateElement);
+
     return (src, title) => {
         const [rendered, { img }] = template.render({
             src,
@@ -37,9 +36,10 @@ export function imageFactory() {
 
 export function videoFactory() {
 
-    const template = new Template(
-        document.querySelector('#video-template').content
-    );
+    const templateElement = document.querySelector('#video-template')?.content;
+    if (!templateElement) throw new Error('video template not found in the document');
+    const template = new Template(templateElement);
+
     return (src, title, allowControls = false) => {
         const [rendered, { video }] = template.render({
             src,
@@ -56,6 +56,7 @@ export function videoFactory() {
 export function mediaFactory(base = `${import.meta.env.BASE_URL}/media/`, useThumbnail = false) {
     const createImage = imageFactory();
     const createVideo = videoFactory();
+
     return function (source, title, allowControls = false) {
         if (source) {
             let mediaElement = null;
@@ -78,6 +79,7 @@ export function mediaFactory(base = `${import.meta.env.BASE_URL}/media/`, useThu
 export function mediaCardFactory(removeTemplateElement = false) {
     const createMedia = mediaFactory(`${import.meta.env.BASE_URL}media/`, true);
     const templateElement = document.querySelector('#media-card-template');
+    if (!templateElement) throw new Error('media-card template not found in the document');
     const template = new Template(templateElement.content);
 
     if (removeTemplateElement) {
