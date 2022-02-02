@@ -21,11 +21,9 @@
     "url": "https://github.com/alexandre-jung/AlexandreJung_6_29102021/issues"
   },
   "homepage": "https://github.com/alexandre-jung/AlexandreJung_6_29102021#readme",
-  "dependencies": {
-    "sass": "^1.44.0"
-  },
   "devDependencies": {
-    "vite": "^2.7.2",
-    "eslint": "^8.4.1"
+    "eslint": "^8.4.1",
+    "sass": "^1.49.7",
+    "vite": "^2.7.2"
   }
 }
