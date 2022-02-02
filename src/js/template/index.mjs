@@ -1,3 +1,5 @@
+import { isString } from "../utils/index.mjs";
+
 export function forEachElement(root, callback) {
     if (!root) return [];
     function _foreach(root) {
@@ -24,9 +26,8 @@ export function flattenElements(root) {
 }
 
 function forEachAttribute(element, callback) {
-    if (element && element.attributes && callback)
-        for (const a of Array.from(element.attributes))
-            callback(a.name, a.value);
+    if (!element || !element.attributes || !callback) return;
+    for (const a of Array.from(element.attributes)) callback(a.name, a.value);
 }
 
 function stripPrefixedAttributes(element, prefix) {
@@ -42,57 +43,69 @@ export default class Template {
 
     static fillElement(element, data, prefix) {
         forEachAttribute(element, (templateAttributeName, value) => {
-            if (templateAttributeName.startsWith(prefix)) {
-                const targetAttributeName = templateAttributeName.slice(
-                    prefix.length
-                );
-                if (targetAttributeName) {
-                    if (value in data) {
-                        switch (targetAttributeName.toLowerCase()) {
-                            case "text":
-                                element.textContent = data[value];
-                                break;
-                            case "style":
-                                Object.assign(element.style, data[value]);
-                                break;
-                            case "handle":
-                                break;
-                            default:
-                                element.setAttribute(
-                                    targetAttributeName,
-                                    data[value]
-                                );
-                        }
-                    }
-                }
+            // Assert templateAttributeName is a string.
+            if (!templateAttributeName || !isString(templateAttributeName))
+                return;
+
+            const targetAttributeName =
+                prefix.length && templateAttributeName.slice(prefix.length);
+
+            // Check wether the attribute should be handled.
+            if (!templateAttributeName.startsWith(prefix) || !(value in data))
+                return;
+
+            switch (targetAttributeName.toLowerCase()) {
+                case "text":
+                    element.textContent = data[value];
+                    break;
+                case "style":
+                    Object.assign(element.style, data[value]);
+                    break;
+                case "handle":
+                    break;
+                default:
+                    element.setAttribute(targetAttributeName, data[value]);
             }
         });
     }
 
+    /**
+     * Build an object where keys are the value of filterAttribute and
+     * values are a reference to the HTMLElement.
+     * 
+     * Returns an empty object if no handles are found.
+     * Throws and Error if there is a duplicate handle name.
+     */
     static getElementHandles(root, filterAttribute) {
         if (!root) return {};
         const elements = Array.isArray(root) ? root : flattenElements(root);
         const result = {};
         elements.forEach((element) => {
-            if (element.nodeType && element.nodeType == Node.ELEMENT_NODE) {
-                const attribute = element.getAttribute(filterAttribute);
-                if (attribute) {
-                    if (attribute in result) {
-                        throw new Error(
-                            [
-                                `${filterAttribute} must be unique in template scope`,
-                                `Duplicate value: ${attribute}`,
-                            ].join("\n")
-                        );
-                    }
-                    result[attribute] = element;
+            if (
+                !element ||
+                !element.nodeType ||
+                element.nodeType != Node.ELEMENT_NODE
+            )
+                return;
+
+            const handleName = element.getAttribute(filterAttribute);
+
+            if (handleName) {
+                if (handleName in result) {
+                    throw new Error(
+                        [
+                            `${filterAttribute} must be unique in template scope`,
+                            `Duplicate value: ${handleName}`,
+                        ].join("\n")
+                    );
                 }
+                result[handleName] = element;
             }
         });
         return result;
     }
 
-    static fill(element, data = {}, prefix) {
+    static fillElements(element, data = {}, prefix) {
         flattenElements(element).forEach((element) => {
             Template.fillElement(element, data, prefix);
         });
@@ -102,7 +115,7 @@ export default class Template {
     render(data) {
         const fragment = this.fragment.cloneNode(true);
         const handles = Template.getElementHandles(fragment, "x:handle");
-        Template.fill(fragment, data, "x:");
+        Template.fillElements(fragment, data, "x:");
         flattenElements(fragment).forEach((element) =>
             stripPrefixedAttributes(element, "x:")
         );

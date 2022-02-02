@@ -26,3 +26,7 @@ export function wrapElement(element, nodeType) {
     wrapper.append(element);
     return wrapper;
 }
+
+export function isString(string) {
+    return typeof string == 'string' || string instanceof String;
+}
